@@ -27,7 +27,7 @@ bot.on('message', (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
-    bot.sendMessage(msg.chat.id, 'Nooice! I got your location. What do you want me to do?', {
+    bot.sendMessage(msg.chat.id, 'NOOICE! I got your location.', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
           [{ text: 'Send me the Nearest ATM', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }], //  `Send! [la:${msg.location.latitude} lo:${msg.location.longitude}]`
