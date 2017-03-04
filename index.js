@@ -30,13 +30,18 @@ bot.on('message', (msg) => {
     bot.sendMessage(msg.chat.id, 'NOOICE! Got Your Location 📍', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
-          [{ text: 'Send Me The Nearest 🏧', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
-          [{ text: '😇 There\'s An 🏧', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
+          [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
+          [{ text: '😇 Resister an 🏧 📍', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
           [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
         ],
       }),
     });
 
+    return;
+  }
+
+  if (msg.text === 'Just Say NOOICE!') {
+    bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
   }
 
