@@ -31,12 +31,15 @@ bot.on('callback_query', callbackQuery(bot, config, moedoo));
 moedoo.query(`
   -- CREATE EXTENSION postgis;
 
+  DROP TABLE atm; -- flush
+
   CREATE TABLE IF NOT EXISTS atm (
     atm_id serial NOT NULL,
     atm_location geometry, -- locaton
     atm_bank_name character varying(128) DEFAULT 'ATM'::character varying, -- bank
     atm_timestamp timestamp with time zone DEFAULT now(), -- creation timestamp
-    atm_approved boolean DEFAULT false -- approval status
+    atm_approved boolean DEFAULT false, -- approval status
+    CONSTRAINT atm_pk PRIMARY KEY (atm_id)
   );
 `)
   .then(() => {
