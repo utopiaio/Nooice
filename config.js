@@ -3,7 +3,7 @@ const DB_HOST = '127.0.0.1';
 const DB_USER = 'moe';
 const DB_PASSWORD = '';
 const DB_PORT = 5432;
-const DB_NAME = 'showtime';
+const DB_NAME = 'nooice';
 
 // app
 const APP_HOST = '0.0.0.0';
