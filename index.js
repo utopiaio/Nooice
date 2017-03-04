@@ -10,6 +10,7 @@ const moedoo = require('./lib/moedoo')(process.env.DATABASE_URL || {
   DB_PORT: config.DB_PORT,
   DB_NAME: config.DB_NAME,
 });
+const callbackQuery = require('./responders/callback.js');
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
 
@@ -23,11 +24,13 @@ const url = process.env.APP_URL || 'https://nooice.herokuapp.com:443';
 
 bot.setWebHook(`${url}/bot${TOKEN}`);
 
+// all will happen inside a `message` - middleware will be applied
+// to break the monolithic crap here
 bot.on('message', (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
-    bot.sendMessage(msg.chat.id, 'NOOICE! Got Your Location 📍', {
+    bot.sendMessage(msg.chat.id, 'NOOICE! got your 📍', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
           [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
@@ -40,7 +43,7 @@ bot.on('message', (msg) => {
     return;
   }
 
-  // message contains nooice --- sending a nooice back!
+  // message contains NOOICE --- sending a NOOICE back!
   if (msg.text.search(/nooice/i) > -1) {
     bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
@@ -49,25 +52,26 @@ bot.on('message', (msg) => {
   bot.sendMessage(msg.chat.id, 'NOOICE!', {
     reply_markup: JSON.stringify({
       keyboard: [
-        [{ text: 'Send Location', request_location: true }],
-        [{ text: 'Just Say NOOICE!' }],
+        [{ text: 'Send 📍', request_location: true }],
+        [{ text: 'Just say NOOICE!' }],
       ],
       one_time_keyboard: true,
     }),
   });
 });
 
-bot.on('callback_query', (callbackQuery) => {
-  console.log(callbackQuery);
-  const data = JSON.parse(callbackQuery.data);
+bot.on('callback_query', callbackQuery(bot, config, moedoo));
+// bot.on('callback_query', (callbackQuery) => {
+//   console.log(callbackQuery);
+//   const data = JSON.parse(callbackQuery.data);
 
-  if (data.type === 'N') {
-    bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', true);
-    return;
-  }
+//   if (data.type === 'N') {
+//     bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', true);
+//     return;
+//   }
 
-  bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', false);
-});
+//   bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+// });
 
 moedoo.query(`
   -- CREATE EXTENSION postgis;

@@ -9,6 +9,9 @@ const DB_NAME = 'nooice';
 const APP_HOST = '0.0.0.0';
 const APP_PORT = '8000';
 
+// 👑
+const NOOICE = [266005847];
+
 module.exports = {
   DB_HOST,
   DB_USER,
@@ -18,4 +21,6 @@ module.exports = {
 
   APP_HOST,
   APP_PORT,
+
+  NOOICE,
 };
