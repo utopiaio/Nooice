@@ -29,8 +29,9 @@ bot.on('message', (msg) => {
   bot.sendMessage(msg.chat.id, 'Nooice!', {
     reply_markup: JSON.stringify({
       keyboard: [
-        [{ text: 'NOOICE!', request_location: true }],
-        [{ text: 'Nooice?' }],
+        [{ text: 'Get Nearest ATM', request_location: true }],
+        [{ text: 'Upload ATM Location', request_location: true }],
+        [{ text: 'Just Say Nooice!' }],
       ],
       one_time_keyboard: true,
     }),
@@ -41,7 +42,7 @@ moedoo.query(`
   -- CREATE EXTENSION postgis;
 `)
   .then(() => {
-    console.log('noice!');
+    console.log('nooice!');
   }, (err) => {
-    console.log('noice!', err);
+    console.log('nooice!', err);
   });
