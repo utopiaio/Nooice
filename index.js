@@ -30,9 +30,9 @@ bot.on('message', (msg) => {
     bot.sendMessage(msg.chat.id, 'NOOICE! I got your location.', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
-          [{ text: 'Send me the Nearest ATM', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }], //  `Send! [la:${msg.location.latitude} lo:${msg.location.longitude}]`
-          [{ text: 'There is an ATM', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }], // `ATM! [la:${msg.location.latitude} lo:${msg.location.longitude}]` }
-          [{ text: 'Just say Nooice!', callback_data: JSON.stringify({ type: 'N' }) }], // `Nooice! ${msg.chat.id}`
+          [{ text: 'Send me the Nearest ATM', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
+          [{ text: 'There is an ATM', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
+          [{ text: 'Just say Nooice!', callback_data: JSON.stringify({ type: 'N' }) }],
         ],
       }),
     });
@@ -40,11 +40,10 @@ bot.on('message', (msg) => {
     return;
   }
 
-  bot.sendMessage(msg.chat.id, 'Nooice!', {
+  bot.sendMessage(msg.chat.id, 'NOOICE!', {
     reply_markup: JSON.stringify({
       keyboard: [
-        [{ text: 'Get Nearest ATM', request_location: true }],
-        [{ text: 'Upload ATM Location', request_location: true }],
+        [{ text: 'I Need Your Location First', request_location: true }],
         [{ text: 'Just Say Nooice!' }],
       ],
       one_time_keyboard: true,
