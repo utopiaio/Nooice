@@ -6,6 +6,13 @@ module.exports = (bot, config, moedoo) => (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
+    /**
+     * there's a 64 byte limit on `callback_data` hence the single letter types
+     *
+     * S: Send me nearest ATM
+     * A: Add new ATM location
+     * N: NOOICE!
+     */
     bot.sendMessage(msg.chat.id, 'NOOICE! got your 📍', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
