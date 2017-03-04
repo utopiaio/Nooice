@@ -54,7 +54,12 @@ bot.on('message', (msg) => {
 
 bot.on('callback_query', (callbackQuery) => {
   console.log(callbackQuery);
-  console.log(JSON.parse(callbackQuery.data));
+  const data = JSON.parse(callbackQuery.data);
+
+  if (data.type === 'N') {
+    bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', true);
+    return;
+  }
 
   bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', false);
 });
