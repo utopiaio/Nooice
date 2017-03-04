@@ -54,7 +54,7 @@ bot.on('message', (msg) => {
 bot.on('callback_query', (callbackQuery) => {
   console.log(callbackQuery);
 
-  bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', true);
+  bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', false);
 });
 
 moedoo.query(`
