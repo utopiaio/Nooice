@@ -51,8 +51,8 @@ bot.on('message', (msg) => {
   });
 });
 
-bot.on('callback', (msg) => {
-  console.log(msg);
+bot.on('callback_query', (callbackQuery) => {
+  console.log(callbackQuery);
 });
 
 moedoo.query(`
