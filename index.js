@@ -36,7 +36,7 @@ bot.on('message', (msg) => {
 });
 
 moedoo.query(`
-  CREATE EXTENSION postgis;
+  -- CREATE EXTENSION postgis;
 `)
   .then(() => {
     console.log('noice!');
