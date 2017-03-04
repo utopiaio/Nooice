@@ -30,9 +30,9 @@ bot.on('message', (msg) => {
     bot.sendMessage(msg.chat.id, 'Nooice! I got your location. What do you want me to do?', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
-          [{ text: 'Send me the Nearest ATM', callback_data: JSON.stringify({ type: 'SEND', location: msg.location }) }],
-          [{ text: 'There is an ATM', callback_data: JSON.stringify({ type: 'ATM', location: msg.location }) }],
-          [{ text: 'Just say Nooice!', callback_data: JSON.stringify({ type: 'NOOICE' }) }],
+          [{ text: 'Send me the Nearest ATM', callback_data: JSON.stringify({ type: 'SEND' }) }], //  `Send! [la:${msg.location.latitude} lo:${msg.location.longitude}]`
+          [{ text: 'There is an ATM', callback_data: JSON.stringify({ type: 'ATM' }) }], // `ATM! [la:${msg.location.latitude} lo:${msg.location.longitude}]` }
+          [{ text: 'Just say Nooice!', callback_data: JSON.stringify({ type: 'NOOICE' }) }], // `Nooice! ${msg.chat.id}`
         ],
       }),
     });
