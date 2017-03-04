@@ -23,10 +23,6 @@ const url = process.env.APP_URL || 'https://nooice.herokuapp.com:443';
 
 bot.setWebHook(`${url}/bot${TOKEN}`);
 
-bot.onText(/^\/nooice$/i, (msg) => {
-  bot.sendMessage(msg.chat.id, '/NOOICE!');
-});
-
 bot.on('message', (msg) => {
   console.log(msg);
 
@@ -44,7 +40,8 @@ bot.on('message', (msg) => {
     return;
   }
 
-  if (msg.text === 'Just Say NOOICE!') {
+  // message contains nooice --- sending a nooice back!
+  if (msg.text.search(/nooice/i) > -1) {
     bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
   }
