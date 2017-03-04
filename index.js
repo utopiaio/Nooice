@@ -31,7 +31,7 @@ bot.on('callback_query', callbackQuery(bot, config, moedoo));
 moedoo.query(`
   -- CREATE EXTENSION postgis;
 
-  DROP TABLE atm; -- flush
+  -- DROP TABLE atm; -- flush
 
   CREATE TABLE IF NOT EXISTS atm (
     atm_id serial NOT NULL,
