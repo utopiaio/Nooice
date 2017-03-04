@@ -2,7 +2,7 @@
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
-module.exports = (bot, config, moedoo) => (msg) => {
+module.exports = bot => (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
