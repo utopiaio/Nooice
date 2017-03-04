@@ -26,7 +26,7 @@ bot.setWebHook(`${url}/bot${TOKEN}`);
 bot.on('message', (msg) => {
   bot.sendMessage(msg.chat.id, 'Nooice!', {
     reply_markup: JSON.stringify({
-      inline_keyboard: [
+      keyboard: [
         [{ text: 'Nooice?', request_location: true }],
         [{ text: 'Nooice!' }],
       ],
