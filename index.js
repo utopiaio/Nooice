@@ -27,7 +27,7 @@ bot.on('message', (msg) => {
   bot.sendMessage(msg.chat.id, 'Nooice!', {
     reply_markup: JSON.stringify({
       keyboard: [
-        ['Nooice?'],
+        [{ text: 'Nooice?', request_location: true }],
         ['Nooice!'],
       ],
       one_time_keyboard: true,
