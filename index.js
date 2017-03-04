@@ -28,7 +28,7 @@ bot.on('message', (msg) => {
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [{ text: 'Nooice?', request_location: true }],
-        ['Nooice!'],
+        [{ text: 'Nooice!' }],
       ],
       one_time_keyboard: true,
     }),
