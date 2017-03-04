@@ -24,7 +24,7 @@ const url = process.env.APP_URL || 'https://nooice.herokuapp.com:443';
 bot.setWebHook(`${url}/bot${TOKEN}`);
 
 bot.on('message', (msg) => {
-  bot.sendMessage(msg.chat.id, 'I am alive on Heroku!');
+  bot.sendMessage(msg.chat.id, 'Nooice!');
 });
 
 moedoo.query(`
