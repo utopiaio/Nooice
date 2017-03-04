@@ -30,9 +30,9 @@ bot.on('message', (msg) => {
     bot.sendMessage(msg.chat.id, 'NOOICE! I got your location.', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
-          [{ text: 'Send me the Nearest ATM', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
-          [{ text: 'There is an ATM', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
-          [{ text: 'Just say Nooice!', callback_data: JSON.stringify({ type: 'N' }) }],
+          [{ text: 'Send Me The Nearest 🏧', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
+          [{ text: '😇 There\'s an 🏧', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
+          [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
         ],
       }),
     });
@@ -43,8 +43,8 @@ bot.on('message', (msg) => {
   bot.sendMessage(msg.chat.id, 'NOOICE!', {
     reply_markup: JSON.stringify({
       keyboard: [
-        [{ text: 'I Need Your Location First', request_location: true }],
-        [{ text: 'Just Say Nooice!' }],
+        [{ text: 'Send Location', request_location: true }],
+        [{ text: 'Just Say NOOICE!' }],
       ],
       one_time_keyboard: true,
     }),
