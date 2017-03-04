@@ -9,7 +9,7 @@ const DB_NAME = 'nooice';
 const APP_HOST = '0.0.0.0';
 const APP_PORT = '8000';
 
-// 👑
+// 👑 users that have administrator privileges
 const NOOICE = [266005847];
 
 // BANKS - Nemo! 🙌
