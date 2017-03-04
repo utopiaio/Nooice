@@ -12,6 +12,29 @@ const APP_PORT = '8000';
 // 👑
 const NOOICE = [266005847];
 
+// BANKS - Nemo! 🙌
+const BANKS = [
+  'Abay Bank',
+  'Addis International Bank',
+  'Awash International Bank',
+  'Bank of Abyssinia',
+  'Berhan International Bank',
+  'Bunna International Bank',
+  'Commercial Bank of Ethiopia',
+  'Construction and Business Bank',
+  'Cooperative Bank of Oromia',
+  'Dashen Bank',
+  'Debub Global Bank',
+  'Development Bank of Ethiopia',
+  'Enat Bank',
+  'Lion International Bank',
+  'Nib International Bank',
+  'Oromia International Bank',
+  'United Bank',
+  'Wegagen Bank',
+  'Zemen Bank',
+];
+
 module.exports = {
   DB_HOST,
   DB_USER,
@@ -23,4 +46,6 @@ module.exports = {
   APP_PORT,
 
   NOOICE,
+
+  BANKS,
 };
