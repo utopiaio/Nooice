@@ -27,11 +27,11 @@ bot.on('message', (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
-    bot.sendMessage(msg.chat.id, 'NOOICE! I got your location.', {
+    bot.sendMessage(msg.chat.id, 'NOOICE! Got Your Location 📍', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
           [{ text: 'Send Me The Nearest 🏧', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
-          [{ text: '😇 There\'s an 🏧', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
+          [{ text: '😇 There\'s An 🏧', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
           [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
         ],
       }),
