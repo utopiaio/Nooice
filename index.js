@@ -30,6 +30,7 @@ bot.on('message', (msg) => {
         ['Nooice?'],
         ['Nooice!'],
       ],
+      one_time_keyboard: true,
     }),
   });
 });
