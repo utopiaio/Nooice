@@ -61,17 +61,6 @@ bot.on('message', (msg) => {
 });
 
 bot.on('callback_query', callbackQuery(bot, config, moedoo));
-// bot.on('callback_query', (callbackQuery) => {
-//   console.log(callbackQuery);
-//   const data = JSON.parse(callbackQuery.data);
-
-//   if (data.type === 'N') {
-//     bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', true);
-//     return;
-//   }
-
-//   bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-// });
 
 moedoo.query(`
   -- CREATE EXTENSION postgis;
