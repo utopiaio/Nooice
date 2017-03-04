@@ -19,12 +19,13 @@ module.exports = (bot, config, moedoo) => (msg) => {
     return;
   }
 
-  // message contains NOOICE --- sending a NOOICE back!
+  // message contains NOOICE (but no location) --- sending a NOOICE back!
   if (msg.text.search(/nooice/i) > -1) {
     bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
   }
 
+  // message does not contain NOOICE!, sending NOOICE request
   bot.sendMessage(msg.chat.id, 'NOOICE!', {
     reply_markup: JSON.stringify({
       keyboard: [
