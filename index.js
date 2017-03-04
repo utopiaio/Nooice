@@ -26,6 +26,19 @@ bot.setWebHook(`${url}/bot${TOKEN}`);
 bot.on('message', (msg) => {
   console.log(msg);
 
+  if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
+    bot.sendMessage(msg.chat.id, 'Nooice 🌍', {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: 'Noice', callback_data: 'Nooice!' }],
+          [{ text: 'Noice', callback_data: 'Nooice!' }],
+        ],
+      }),
+    });
+
+    return;
+  }
+
   bot.sendMessage(msg.chat.id, 'Nooice!', {
     reply_markup: JSON.stringify({
       keyboard: [
@@ -36,6 +49,10 @@ bot.on('message', (msg) => {
       one_time_keyboard: true,
     }),
   });
+});
+
+bot.on('callback', (msg) => {
+  console.log(msg);
 });
 
 moedoo.query(`
