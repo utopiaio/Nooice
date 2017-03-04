@@ -23,12 +23,16 @@ const url = process.env.APP_URL || 'https://nooice.herokuapp.com:443';
 
 bot.setWebHook(`${url}/bot${TOKEN}`);
 
+bot.onText(/\/NOOICE!/, (msg) => {
+  bot.sendLocation(msg.chat.id, 9.0199, 38.7968);
+});
+
 bot.on('message', (msg) => {
   bot.sendMessage(msg.chat.id, 'Nooice!', {
     reply_markup: JSON.stringify({
       keyboard: [
-        [{ text: 'Nooice?', request_location: true }],
-        [{ text: 'Nooice!' }],
+        [{ text: '/NOOICE!', request_location: true }],
+        [{ text: 'Nooice?' }],
       ],
       one_time_keyboard: true,
     }),
