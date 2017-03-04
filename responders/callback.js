@@ -5,10 +5,20 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
   const data = JSON.parse(callbackQuery.data);
 
-  if (data.type === 'N') {
-    bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', true);
-    return;
-  }
+  switch (data.type) {
+    case 'N':
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', true);
+      return;
 
-  bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+    case 'S':
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+      return;
+
+    case 'A':
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+      return;
+
+    default:
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+  }
 };
