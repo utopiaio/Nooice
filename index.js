@@ -27,11 +27,15 @@ bot.on('message', (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
+    bot.sendMessage(msg.chat.id, `Nooice! I got your location.
+What do you want me to do?`);
+
     bot.sendLocation(msg.chat.id, msg.location.latitude, msg.location.longitude, {
       reply_markup: JSON.stringify({
         inline_keyboard: [
-          [{ text: 'Noice', callback_data: 'Nooice!' }],
-          [{ text: 'Noice', callback_data: 'Nooice!' }],
+          [{ text: 'Send me the Nearest ATM', callback_data: 'Send!' }],
+          [{ text: 'There is an ATM', callback_data: 'ATM!' }],
+          [{ text: 'Just say Nooice!', callback_data: 'Nooice!' }],
         ],
       }),
     });
@@ -53,6 +57,11 @@ bot.on('message', (msg) => {
 
 bot.on('callback_query', (callbackQuery) => {
   console.log(callbackQuery);
+
+  if (callbackQuery.data === 'Nooice!') {
+    bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', true);
+    return;
+  }
 
   bot.answerCallbackQuery(callbackQuery.id, 'Nooice!', false);
 });
