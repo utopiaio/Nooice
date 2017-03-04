@@ -10,7 +10,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
       reply_markup: JSON.stringify({
         inline_keyboard: [
           [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
-          [{ text: '😇 Resister an 🏧 📍', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
+          [{ text: '😇 Register an 🏧 📍', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
           [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
         ],
       }),

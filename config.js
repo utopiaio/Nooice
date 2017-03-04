@@ -35,6 +35,9 @@ const BANKS = [
   'Zemen Bank',
 ];
 
+// threshold in meters to disable re-submission
+const THRESHOLD = 100;
+
 module.exports = {
   DB_HOST,
   DB_USER,
@@ -48,4 +51,6 @@ module.exports = {
   NOOICE,
 
   BANKS,
+
+  THRESHOLD,
 };
