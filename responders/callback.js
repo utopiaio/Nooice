@@ -30,9 +30,7 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
             bot.answerCallbackQuery(callbackQuery.id, 'NOOICE 😔', false);
             bot.sendMessage(callbackQuery.message.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters
 
-Move around, get a better GPS lock and try gain`, {
-  parse_mode: 'Markdown',
-});
+Move around, get a better GPS lock and try gain`);
             return;
           }
 
@@ -41,7 +39,7 @@ Move around, get a better GPS lock and try gain`, {
           if (atmsInRange.length === 1) {
             bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*!
 
-\`${atmsInRange[0].atm_bank_name}\` 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
+*${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
   parse_mode: 'Markdown',
 });
 
@@ -55,9 +53,9 @@ Move around, get a better GPS lock and try gain`, {
 
           bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*!
 
-\`${atmsInRange[0].atm_bank_name}\` 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍
+*${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍
 
-Also, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's' : ''} just incase`, {
+Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's' : ''} that are within *${config.THRESHOLD}* meters`, {
   parse_mode: 'Markdown',
 });
 
@@ -95,7 +93,7 @@ Also, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length
         WHERE atm_id = $1;
       `, [data.id]).then((rows) => {
         const atm = rows[0];
-        bot.sendMessage(callbackQuery.message.chat.id, `\`${atm.atm_bank_name}\` 🏧`, { parse_mode: 'Markdown' });
+        bot.sendMessage(callbackQuery.message.chat.id, `*${atm.atm_bank_name}* 🏧`, { parse_mode: 'Markdown' });
 
         // intentional delay to _guarantee_ location is sent after message
         setTimeout(() => {
