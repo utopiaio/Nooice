@@ -75,8 +75,16 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
 
       const message = rows.map(atm => `${atm.atm_bank_name}
 ${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
+${atm.atm_approved ? '✅' : '⏳'}
+
 /location_${atm.atm_id}
-${atm.atm_approved ? '✅' : '⏳'}`).join(`
+
+/approve_${atm.atm_id}
+
+/disapprove_${atm.atm_id}
+
+/delete_${atm.atm_id}`).join(`
+
 
 `);
       bot.sendMessage(msg.chat.id, message, {
