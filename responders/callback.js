@@ -129,13 +129,29 @@ But you know what, I'm going to send a *NOOICE* your way 🙌🏿
       moedoo
         .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), '${config.BANKS[data.i]}', false) returning atm_bank_name, atm_timestamp;`)
         .then((row) => {
-          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-          console.log(row);
-          // bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! 🙌🏿`, {
-          //   ${moment(.atm_timestamp).format('MMMM DD, YYYY')}
-          //   parse_mode: `Markdown`
-          // });
-          bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
+          if (row.length === 1) {
+            bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+
+            const atm = row[0];
+            bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! 🎉
+
+*${atm.atm_bank_name}*
+${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
+
+አመሰግናለው 🙌🏿, Have a *NOOICE*!
+
+PS
+The moderators have been notified 📣
+`, {
+  parse_mode: 'Markdown',
+});
+            // NOOICE...
+            setTimeout(() => {
+              bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
+            }, 1000);
+          }
+
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         }, (err) => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
           console.log(err);
