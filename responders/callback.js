@@ -88,24 +88,31 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
     case 'A': {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
-      const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', index }) }]);
+      // const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', index, location: callbackQuery.message.reply_to_message.location }) }]);
 
       moedoo
-        .query(`INSERT INTO atm (atm_location, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), false);`)
-        .then((row) => {
-          console.log(row);
-          bot.sendMessage(callbackQuery.message.chat.id, `የማን ነው?
-
-${config.BANKS.map((bank, index) => `${index + 1}. ${bank} /bank_${index + 1}`).join(`
-`)}`, {
-  reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
-  reply_markup: JSON.stringify({
-    inline_keyboard: inlineKeyboard,
-  }),
-});
+        .query(`SELECT atm_id
+                FROM atm
+                WHERE round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`)
+        .then((rows) => {
+          console.log(rows);
         }, (err) => {
           console.log(err);
         });
+
+      // moedoo
+      //   .query(`INSERT INTO atm (atm_location, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), false);`)
+      //   .then((row) => {
+      //     console.log(row);
+      //     bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
+      //       reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
+      //       reply_markup: JSON.stringify({
+      //         inline_keyboard: inlineKeyboard,
+      //       }),
+      //     });
+      //   }, (err) => {
+      //     console.log(err);
+      //   });
       // bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
       return;
     }
