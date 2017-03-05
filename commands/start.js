@@ -3,7 +3,7 @@ module.exports = (bot, msg) => {
 
 I am the bot that tells you where the nearest 🏧 is; I can also do *date* and *number* conversion
 
-The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁)
+The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁). There are *500+* 🏧s, how many of them can you find on OSM, Google / Apple Maps?
 
 The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
 
