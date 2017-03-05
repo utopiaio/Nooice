@@ -211,6 +211,10 @@ function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
+geezer@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/geezer/-/geezer-1.0.3.tgz#135c7b810fbb43ddbf0b0bcbda3185b0174a6076"
+
 generate-function@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/generate-function/-/generate-function-2.0.0.tgz#6858fe7c0969b7d4e9093337647ac79f60dfbe74"
