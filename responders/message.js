@@ -9,7 +9,7 @@ module.exports = bot => (msg) => {
      * A: Add new ATM location
      * N: NOOICE!
      */
-    bot.sendMessage(msg.chat.id, 'NOOICE! got your 📍', {
+    bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
       reply_markup: JSON.stringify({
         inline_keyboard: [
           [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
@@ -53,7 +53,7 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within 20 mete
   }
 
   // message does not contain NOOICE!, sending NOOICE request
-  bot.sendMessage(msg.chat.id, 'NOOICE!', {
+  bot.sendMessage(msg.chat.id, 'NOOICE?', {
     reply_markup: JSON.stringify({
       keyboard: [
         [{ text: 'Send 📍', request_location: true }],
