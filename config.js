@@ -12,6 +12,9 @@ const APP_PORT = '8000';
 // 👑 users that have administrator privileges
 const NOOICE = [266005847];
 
+// Nooice
+const GIF = 'http://i.giphy.com/PhKhSXofSAm3e.gif';
+
 // BANKS - Nemo! 🙌
 const BANKS = [
   'Abay Bank',
@@ -49,6 +52,8 @@ module.exports = {
   APP_PORT,
 
   NOOICE,
+
+  GIF,
 
   BANKS,
 
