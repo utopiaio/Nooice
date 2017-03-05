@@ -23,8 +23,41 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
           ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l.latitude}, ${data.l.longitude}]}')
           LIMIT 3;
         `).then((rows) => {
-          console.log(rows);
+          const atmsInRange = rows.filter(atm => Number.parseInt(atm.atm_distance, 10) <= config.THRESHOLD);
+
+          if (rows.length === 0 || atmsInRange.length === 0) {
+            bot.answerCallbackQuery(callbackQuery.id, 'NOOICE 😔', false);
+            bot.sendMessage(callbackQuery.message.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters
+
+Move around, get a better GPS lock and try gain`, {
+  parse_mode: 'Markdown',
+});
+            return;
+          }
+
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+
+          if (atmsInRange.length === 1) {
+            bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! \`${atmsInRange[0].atm_bank_name}\` 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
+              parse_mode: 'Markdown',
+            });
+
+            bot.sendLocation(callbackQuery.message.chat.id, atmsInRange[0].atm_location.coordinates[0], atmsInRange[0].atm_location.coordinates[1]);
+            return;
+          }
+
+          bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! \`${atmsInRange[0].atm_bank_name}\` 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍
+
+Also, I'm sending you extra *${atmsInRange.length - 1}* just incase`, {
+  parse_mode: 'Markdown',
+});
+
+          const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `${atm.atm_bank_name} 🏧 witin ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
+          bot.sendLocation(callbackQuery.message.chat.id, atmsInRange[0].atm_location.coordinates[0], atmsInRange[0].atm_location.coordinates[1], {
+            reply_markup: JSON.stringify({
+              inline_keyboard: inlineKeyboard,
+            }),
+          });
         }, (err) => {
           console.log(err);
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
