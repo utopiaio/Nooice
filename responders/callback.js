@@ -45,14 +45,11 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
 *${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
   parse_mode: 'Markdown',
+  disable_notification: true,
+}).then(() => {
+  // eslint-disable-next-line
+  bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1]);
 });
-
-            // intentional delay to _guarantee_ location is sent after message
-            setTimeout(() => {
-              // eslint-disable-next-line
-              bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1]);
-            }, 250);
-
             return;
           }
 
@@ -62,18 +59,16 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
 Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within *${config.THRESHOLD}* meters`, {
   parse_mode: 'Markdown',
+  disable_notification: true,
+}).then(() => {
+  const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `🏧 within ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
+  // eslint-disable-next-line
+  bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1], {
+    reply_markup: JSON.stringify({
+      inline_keyboard: inlineKeyboard,
+    }),
+  });
 });
-
-          // intentional delay to _guarantee_ location is sent after message
-          setTimeout(() => {
-            const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `🏧 within ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
-            // eslint-disable-next-line
-            bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1], {
-              reply_markup: JSON.stringify({
-                inline_keyboard: inlineKeyboard,
-              }),
-            });
-          }, 250);
         }, () => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         });
@@ -142,13 +137,9 @@ PS
 The moderators have been notified 📣
 `, {
   parse_mode: 'Markdown',
+}).then(() => {
+  bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
 });
-
-                  // NOOICE...
-                  setTimeout(() => {
-                    bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
-                  }, 1000);
-
                   return;
                 }
 
@@ -183,13 +174,15 @@ The moderators have been notified 📣
         bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
 
         const atm = rows[0];
-        bot.sendMessage(callbackQuery.message.chat.id, `*${atm.atm_bank_name}* 🏧`, { parse_mode: 'Markdown' });
-
-        // intentional delay to _guarantee_ location is sent after message
-        setTimeout(() => {
-          // eslint-disable-next-line
-          bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
-        }, 250);
+        bot
+          .sendMessage(callbackQuery.message.chat.id, `*${atm.atm_bank_name}* 🏧`, {
+            parse_mode: 'Markdown',
+            disable_notification: true,
+          })
+          .then(() => {
+            // eslint-disable-next-line
+            bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
+          });
       }, () => {
         bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
       });
