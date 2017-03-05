@@ -85,17 +85,26 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
 
       return;
 
-    case 'A':
+    case 'A': {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-      bot.sendMessage(callbackQuery.message.chat.id, `የማን ነው?
+      const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
 
-${config.BANKS.map((bank, index) => `${index + 1}. ${bank}
-/bank_${callbackQuery.message.reply_to_message.from.id}_${callbackQuery.message.reply_to_message.date}_${index}`).join(`
+      moedoo
+        .query(`INSERT INTO atm (atm_location, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), false);`)
+        .then((row) => {
+          console.log(row);
+          bot.sendMessage(callbackQuery.message.chat.id, `የማን ነው?
+
+${config.BANKS.map((bank, index) => `${index + 1}. ${bank} /bank_${index + 1}`).join(`
 `)}`, {
   reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
 });
+        }, (err) => {
+          console.log(err);
+        });
       // bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
       return;
+    }
 
     case 'P':
       moedoo.query(`
