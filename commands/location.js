@@ -6,6 +6,8 @@ module.exports = (bot, msg, moedoo) => {
     .then((rows) => {
       if (rows.length === 1) {
         const atm = rows[0];
+
+        // eslint-disable-next-line
         bot.sendLocation(msg.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
         return;
       }
