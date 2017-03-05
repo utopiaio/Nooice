@@ -34,6 +34,8 @@ function ethiopicMonthToFullEthiopicMonth(month) {
 }
 
 module.exports = (bot, msg) => {
+  bot.sendChatAction(msg.chat.id, 'typing');
+
   const gCMoment = moment(msg.date, 'X');
   const ec = ge(gCMoment.year(), gCMoment.month() + 1, gCMoment.date());
 

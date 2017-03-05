@@ -1,6 +1,8 @@
 const moment = require('moment');
 
 module.exports = (bot, msg, moedoo) => {
+  bot.sendChatAction(msg.chat.id, 'typing');
+
   moedoo.query(`
     SELECT atm_id,
            atm_bank_name,

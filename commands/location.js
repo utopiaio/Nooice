@@ -1,4 +1,6 @@
 module.exports = (bot, msg, moedoo) => {
+  bot.sendChatAction(msg.chat.id, 'find_location');
+
   const atmId = Number.parseInt(msg.text.match(/^\/location_(\d+)$/)[1], 10);
 
   moedoo

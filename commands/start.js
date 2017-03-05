@@ -1,4 +1,6 @@
 module.exports = (bot, msg) => {
+  bot.sendChatAction(msg.chat.id, 'typing');
+
   bot.sendMessage(msg.chat.id, `*NOOICE*!
 
 I am the bot that tells you where the nearest 🏧 is; I can also do *date* and *number* conversion

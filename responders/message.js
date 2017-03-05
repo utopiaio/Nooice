@@ -18,6 +18,8 @@ module.exports = (bot, config, moedoo) => (msg) => {
      * A: Add new ATM location
      * N: NOOICE!
      */
+    bot.sendChatAction(msg.chat.id, 'typing');
+
     bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
       reply_to_message_id: msg.message_id,
       reply_markup: JSON.stringify({
@@ -40,6 +42,8 @@ module.exports = (bot, config, moedoo) => (msg) => {
 
   // message contains NOOICE (but no location) --- sending a NOOICE back!
   if (msg.text.search(/nooice/i) > -1) {
+    bot.sendChatAction(msg.chat.id, 'typing');
+
     bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
   }
@@ -80,6 +84,9 @@ module.exports = (bot, config, moedoo) => (msg) => {
       return;
     }
   }
+
+
+  bot.sendChatAction(msg.chat.id, 'typing');
 
   // message does not contain NOOICE!, sending NOOICE request
   bot.sendMessage(msg.chat.id, 'NOOICE?', {
