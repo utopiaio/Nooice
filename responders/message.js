@@ -24,7 +24,7 @@ module.exports = bot => (msg) => {
 
   // /start
   if (msg.text === '/start') {
-    bot.sendMessage(msg.chat.id, `NOOICE!
+    bot.sendMessage(msg.chat.id, `*NOOICE*!
 
 I am the bot that tells you where the nearest 🏧 is
 
