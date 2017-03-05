@@ -28,9 +28,15 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
           if (rows.length === 0 || atmsInRange.length === 0) {
             bot.answerCallbackQuery(callbackQuery.id, 'NOOICE 😔', false);
-            bot.sendMessage(callbackQuery.message.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters
+            bot.sendMessage(callbackQuery.message.chat.id, `😔 Could not find an 🏧 within *${config.THRESHOLD}* meters
 
-Move around, get a better GPS lock and try gain`);
+💡
+- Move around
+- Get a better GPS lock
+- NOOICE!
+- nooice`, {
+  parse_mode: 'Markdown',
+});
             return;
           }
 
