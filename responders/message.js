@@ -52,7 +52,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
     }
 
     if (msg.text.search(/^\/location_\d+$/) === 0) {
-      location(msg, bot, moedoo);
+      location(bot, msg, moedoo);
       return;
     }
 
