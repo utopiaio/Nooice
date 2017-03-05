@@ -12,6 +12,7 @@ module.exports = bot => (msg) => {
      * N: NOOICE!
      */
     bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
+      reply_to_message_id: msg.message_id,
       reply_markup: JSON.stringify({
         inline_keyboard: [
           [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
