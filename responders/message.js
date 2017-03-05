@@ -28,11 +28,11 @@ module.exports = bot => (msg) => {
 
 I am the bot that tells you where the nearest 🏧 is
 
-The initiative of this bot is to map out every 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁)
+The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁)
 
-The bot is **fully functional** with PostgreSQL + PostGIS and an approval system
+The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
 
-All data will be released under WTFPL License on GitHub
+All data will be released under [WTFPL](http://www.wtfpl.net/) License on GitHub
 
 Let us make it happen 🙌🏿
 
@@ -42,7 +42,9 @@ PS
 Turn on your Wi-Fi to have better accuracy
 
 PPS
-To register an 🏧 please 🙏🏿 make sure your GPS accuray is within 20 meters`);
+To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 meters*`, {
+  parse_mode: 'Markdown',
+});
     return;
   }
 
