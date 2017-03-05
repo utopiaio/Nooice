@@ -1,4 +1,6 @@
 module.exports = (bot, msg, moedoo) => {
+  bot.sendChatAction(msg.chat.id, 'typing');
+
   const atmId = Number.parseInt(msg.text.match(/^\/disapprove_(\d+)$/)[1], 10);
 
   moedoo

@@ -10,6 +10,8 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
     // send nearest ATM
     case 'S':
+      bot.sendChatAction(callbackQuery.message.chat.id, 'find_location');
+
       // preparing query is a bit _tricky_ (with the ST conversion n' all), so I'm going old school
       if (`${data.l.latitude} ${data.l.longitude}`.search(/^\d+\.\d+ \d+\.\d+$/) === 0) {
         moedoo.query(`
@@ -81,6 +83,8 @@ Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.
 
     // add new ATM...
     case 'A': {
+      bot.sendChatAction(callbackQuery.message.chat.id, 'typing');
+
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
       const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, la: latitude, lo: longitude }) }]);
 
@@ -117,6 +121,8 @@ Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.
 
     // add new ATM [finalization]
     case 'B':
+      bot.sendChatAction(callbackQuery.message.chat.id, 'typing');
+
       moedoo
         .query(`SELECT atm_id
                 FROM atm
@@ -170,6 +176,8 @@ The moderators have been notified 📣
 
     // alternate ATM
     case 'P':
+      bot.sendChatAction(callbackQuery.message.chat.id, 'find_location');
+
       moedoo.query(`
         SELECT atm_id,
                atm_bank_name,
