@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 const start = require('./../commands/start');
 const list = require('./../commands/list');
 const location = require('./../commands/location');
@@ -9,8 +8,6 @@ const ndelete = require('./../commands/delete');
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
 module.exports = (bot, config, moedoo) => (msg) => {
-  console.log(msg);
-
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
     /**
      * there's a 64 byte limit on `callback_data` hence the single letter types

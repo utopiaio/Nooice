@@ -1,9 +1,6 @@
-/* eslint no-console: 0 */
 const moment = require('moment');
 
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
-  console.log(callbackQuery);
-
   const data = JSON.parse(callbackQuery.data);
 
   switch (data.type) {
@@ -54,7 +51,7 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
             setTimeout(() => {
               // eslint-disable-next-line
               bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1]);
-            }, 25);
+            }, 128);
             return;
           }
 
@@ -75,9 +72,8 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
                 inline_keyboard: inlineKeyboard,
               }),
             });
-          }, 25);
-        }, (err) => {
-          console.log(err);
+          }, 128);
+        }, () => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         });
       } else {
@@ -87,7 +83,6 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
       return;
 
     case 'A': {
-      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
       const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, la: latitude, lo: longitude }) }]);
 
@@ -97,6 +92,8 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
                 WHERE round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`)
         .then((rows) => {
           if (rows.length === 0) {
+            bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+
             bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
               reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
               reply_markup: JSON.stringify({
@@ -107,20 +104,14 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
             return;
           }
 
-          bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*?
+          bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE* 🙌🏿
 
-*Thank you* for your contribution, but unfortunalty there's already an 🏧 registred within *${config.THRESHOLD_REGISTER}* meters
-
-But you know what, I'm going to send a *NOOICE* your way 🙌🏿
+*Thank you very much* for your contribution, tho there's already an 🏧 registered within *${config.THRESHOLD_REGISTER}* meters
 `, {
   parse_mode: 'Markdown',
 });
-          // Giving time for the Nooooooice!
-          setTimeout(() => {
-            bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
-          }, 1000);
-        }, (err) => {
-          console.log(err);
+        }, () => {
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         });
       return;
     }
@@ -149,12 +140,13 @@ The moderators have been notified 📣
             setTimeout(() => {
               bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
             }, 1000);
+
+            return;
           }
 
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-        }, (err) => {
+        }, () => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-          console.log(err);
         });
       return;
 
@@ -175,9 +167,8 @@ The moderators have been notified 📣
         setTimeout(() => {
           // eslint-disable-next-line
           bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
-        }, 25);
-      }, (err) => {
-        console.log(err);
+        }, 128);
+      }, () => {
         bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
       });
       return;
