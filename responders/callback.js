@@ -38,11 +38,16 @@ Move around, get a better GPS lock and try gain`, {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
 
           if (atmsInRange.length === 1) {
-            bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! \`${atmsInRange[0].atm_bank_name}\` 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
-              parse_mode: 'Markdown',
-            });
+            bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*!
 
-            bot.sendLocation(callbackQuery.message.chat.id, atmsInRange[0].atm_location.coordinates[0], atmsInRange[0].atm_location.coordinates[1]);
+\`${atmsInRange[0].atm_bank_name}\` 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
+  parse_mode: 'Markdown',
+});
+
+            // intentional delay to _guarantee_ location is sent after message
+            setTimeout(() => {
+              bot.sendLocation(callbackQuery.message.chat.id, atmsInRange[0].atm_location.coordinates[0], atmsInRange[0].atm_location.coordinates[1]);
+            }, 25);
             return;
           }
 
@@ -54,12 +59,15 @@ Also, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length
   parse_mode: 'Markdown',
 });
 
-          const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `${atm.atm_bank_name} 🏧 witin ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
-          bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1], {
-            reply_markup: JSON.stringify({
-              inline_keyboard: inlineKeyboard,
-            }),
-          });
+          // intentional delay to _guarantee_ location is sent after message
+          setTimeout(() => {
+            const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `🏧 witin ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
+            bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1], {
+              reply_markup: JSON.stringify({
+                inline_keyboard: inlineKeyboard,
+              }),
+            });
+          }, 25);
         }, (err) => {
           console.log(err);
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
