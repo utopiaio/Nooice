@@ -22,7 +22,7 @@ ${atm.atm_approved ? '✅' : '⏳'}
 
 
 `);
-    bot.sendMessage(msg.chat.id, message, {
+    bot.sendMessage(msg.chat.id, message || 'No 🏧 😔', {
       reply_to_message_id: msg.message_id,
     });
   }, () => {
