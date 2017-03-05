@@ -75,7 +75,7 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
 
       const message = rows.map(atm => `${atm.atm_bank_name}
 ${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
-/location_${atm.atm_id}_${JSON.parse(atm.atm_location).coordinates[0]}_${JSON.parse(atm.atm_location).coordinates[1]}
+/location_${atm.atm_id}
 ${atm.atm_approved ? '✅' : '⏳'}`).join(`
 
 `);
