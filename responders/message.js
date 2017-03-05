@@ -146,6 +146,21 @@ ${atm.atm_approved ? '✅' : '⏳'}
     return;
   }
 
+  if (msg.text.search(/^\/delete_\d+$/) === 0) {
+    const atmId = Number.parseInt(msg.text.match(/^\/delete_(\d+)$/)[1], 10);
+
+    moedoo
+      .query('DELETE FROM atm WHERE atm_id=$1', [atmId])
+      .then(() => {
+        bot.sendMessage(msg.chat.id, 'NOOICE 👍🏿');
+      }, (err) => {
+        console.log(err);
+        bot.sendMessage(msg.chat.id, 'NOOICE?');
+      });
+
+    return;
+  }
+
   // message does not contain NOOICE!, sending NOOICE request
   bot.sendMessage(msg.chat.id, 'NOOICE?', {
     reply_markup: JSON.stringify({
