@@ -61,7 +61,7 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
 *${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍
 
-Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's' : ''} that are within *${config.THRESHOLD}* meters`, {
+Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within *${config.THRESHOLD}* meters`, {
   parse_mode: 'Markdown',
 });
 
