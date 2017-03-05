@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-import moment from 'moment';
+const moment = require('moment');
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
