@@ -38,8 +38,9 @@ const BANKS = [
   'Zemen Bank',
 ];
 
-// threshold in meters to disable re-submission
+// threshold in meters to disable search and re-submission
 const THRESHOLD = 500;
+const THRESHOLD_REGISTER = 100;
 
 module.exports = {
   DB_HOST,
@@ -58,4 +59,5 @@ module.exports = {
   BANKS,
 
   THRESHOLD,
+  THRESHOLD_REGISTER,
 };
