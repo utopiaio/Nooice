@@ -1,4 +1,5 @@
 /* eslint no-console: 0 */
+const moment = require('moment');
 
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
   console.log(callbackQuery);
@@ -121,27 +122,24 @@ But you know what, I'm going to send a *NOOICE* your way 🙌🏿
         }, (err) => {
           console.log(err);
         });
-
-      // moedoo
-      //   .query(`INSERT INTO atm (atm_location, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), false);`)
-      //   .then((row) => {
-      //     console.log(row);
-      //     bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
-      //       reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
-      //       reply_markup: JSON.stringify({
-      //         inline_keyboard: inlineKeyboard,
-      //       }),
-      //     });
-      //   }, (err) => {
-      //     console.log(err);
-      //   });
-      // bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
       return;
     }
 
     case 'B':
-      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-      console.log(data);
+      moedoo
+        .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), '${config.BANKS[data.i]}', false) returning atm_bank_name, atm_timestamp;`)
+        .then((row) => {
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+          console.log(row);
+          // bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! 🙌🏿`, {
+          //   ${moment(.atm_timestamp).format('MMMM DD, YYYY')}
+          //   parse_mode: `Markdown`
+          // });
+          bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
+        }, (err) => {
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+          console.log(err);
+        });
       return;
 
     case 'P':
