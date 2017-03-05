@@ -73,15 +73,14 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
     `).then((rows) => {
       console.log(rows);
 
-      const message = rows.map(atm => `*${atm.atm_bank_name}*
+      const message = rows.map(atm => `${atm.atm_bank_name}
 ${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
-/show/${atm.id}/${JSON.parse(atm.atm_location).coordinates}
+/show/${atm.atm_id}/${JSON.parse(atm.atm_location).coordinates}
 ${atm.atm_approved ? '✅' : '⏳'}`).join(`
 
 `);
       bot.sendMessage(msg.chat.id, message, {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'Markdown',
       });
     }, (err) => {
       console.log(err);
