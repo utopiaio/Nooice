@@ -51,6 +51,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
 
   if (msg.text.search(/^\d+$/) > -1) {
     geezer(bot, msg);
+    return;
   }
 
   if (config.NOOICE.includes(msg.from.id)) {
