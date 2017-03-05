@@ -91,9 +91,9 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
                 FROM atm
                 WHERE round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`)
         .then((rows) => {
-          if (rows.length === 0) {
-            bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
 
+          if (rows.length === 0) {
             bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
               reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
               reply_markup: JSON.stringify({
@@ -113,6 +113,7 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
         }, () => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         });
+
       return;
     }
 
