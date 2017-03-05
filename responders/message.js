@@ -58,6 +58,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
     return;
   }
 
+  // NOOICE 👑 actions
   if (config.NOOICE.includes(msg.from.id)) {
     if (msg.text === '/list') {
       list(bot, msg, moedoo);
@@ -84,7 +85,6 @@ module.exports = (bot, config, moedoo) => (msg) => {
       return;
     }
   }
-
 
   bot.sendChatAction(msg.chat.id, 'typing');
 
