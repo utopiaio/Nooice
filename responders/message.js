@@ -100,17 +100,35 @@ ${atm.atm_approved ? '✅' : '⏳'}
   if (msg.text.search(/^\/location_\d+$/) === 0) {
     const atmId = Number.parseInt(msg.text.match(/^\/location_(\d+)$/)[1], 10);
 
-    moedoo.query('SELECT ST_AsGeoJSON(atm_location) as atm_location FROM atm WHERE atm_id = $1', [atmId]).then((rows) => {
-      if (rows.length === 1) {
-        const atm = rows[0];
-        bot.sendLocation(msg.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
-        return;
-      }
+    moedoo
+      .query('SELECT ST_AsGeoJSON(atm_location) as atm_location FROM atm WHERE atm_id = $1', [atmId])
+      .then((rows) => {
+        if (rows.length === 1) {
+          const atm = rows[0];
+          bot.sendLocation(msg.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
+          return;
+        }
 
-      bot.sendMessage(msg.chat.id, 'NOOICE?');
-    }, (err) => {
-      console.log(err);
-    });
+        bot.sendMessage(msg.chat.id, 'NOOICE?');
+      }, (err) => {
+        console.log(err);
+      });
+    return;
+  }
+
+  if (msg.text.search(/^\/approve_\d+$/) === 0) {
+    const atmId = Number.parseInt(msg.text.match(/^\/approve_(\d+)$/)[1], 10);
+
+    moedoo
+      .query('UPDATE atm SET atm_approved=$1 WHERE atm_id=$2', [true, atmId])
+      .then((rows) => {
+        console.log(rows);
+        bot.sendMessage(msg.chat.id, 'NOOICE 👍🏿');
+      }, (err) => {
+        console.log(err);
+        bot.sendMessage(msg.chat.id, 'NOOICE?');
+      });
+
     return;
   }
 
