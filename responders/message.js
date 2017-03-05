@@ -68,7 +68,7 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
              atm_bank_name,
              ST_AsGeoJSON(atm_location) as atm_location,
              atm_timestamp,
-             atm_approved,
+             atm_approved
       FROM atm
     `).then((rows) => {
       console.log(rows);
