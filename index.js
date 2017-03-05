@@ -44,8 +44,6 @@ moedoo.query(`
 
   -- test data
   -- INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [9.0199, 38.7969]}'), 'Commercial Bank of Ethiopia', true);
-  -- INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [9.0200, 38.7970]}'), 'Dashen Bank', true);
-  -- INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [9.0201, 38.7971]}'), 'Bank of Abyssinia', true);
 `)
   .then(() => {
     console.log('NOOICE! - DB READY');
