@@ -5,6 +5,7 @@ const approve = require('./../commands/approve');
 const disapprove = require('./../commands/disapprove');
 const ndelete = require('./../commands/delete');
 const date = require('./../commands/date');
+const geezer = require('./../commands/geezer');
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
@@ -46,6 +47,10 @@ module.exports = (bot, config, moedoo) => (msg) => {
   if (msg.text.search(/da(y|te)/i) > -1) {
     date(bot, msg);
     return;
+  }
+
+  if (msg.text.search(/^\d+$/) > -1) {
+    geezer(bot, msg);
   }
 
   if (config.NOOICE.includes(msg.from.id)) {
