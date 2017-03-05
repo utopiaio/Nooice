@@ -1,7 +1,7 @@
 module.exports = (bot, msg) => {
   bot.sendMessage(msg.chat.id, `*NOOICE*!
 
-I am the bot that tells you where the nearest 🏧 is
+I am the bot that tells you where the nearest 🏧 is; I can also do *date* and *number* conversion
 
 The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁)
 
