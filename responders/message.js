@@ -80,6 +80,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
     reply_markup: JSON.stringify({
       keyboard: [
         [{ text: 'Send 📍', request_location: true }],
+        [{ text: 'ቀን / Date' }],
         [{ text: 'Just say NOOICE!' }],
       ],
       one_time_keyboard: true,
