@@ -88,6 +88,7 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
     case 'A': {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
+      const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', index }) }]);
 
       moedoo
         .query(`INSERT INTO atm (atm_location, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), false);`)
@@ -98,6 +99,9 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
 ${config.BANKS.map((bank, index) => `${index + 1}. ${bank} /bank_${index + 1}`).join(`
 `)}`, {
   reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
+  reply_markup: JSON.stringify({
+    inline_keyboard: inlineKeyboard,
+  }),
 });
         }, (err) => {
           console.log(err);
