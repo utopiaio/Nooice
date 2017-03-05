@@ -44,6 +44,7 @@ Turn on your Wi-Fi to have better accuracy
 PPS
 To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 meters*`, {
   parse_mode: 'Markdown',
+  disable_web_page_preview: true,
 });
     return;
   }
