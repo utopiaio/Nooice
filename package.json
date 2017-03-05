@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "ethiopic-calendar": "^2.0.0",
     "moment": "^2.17.1",
     "node-telegram-bot-api": "^0.27.0",
     "pg": "^6.1.2"

@@ -4,6 +4,7 @@ const location = require('./../commands/location');
 const approve = require('./../commands/approve');
 const disapprove = require('./../commands/disapprove');
 const ndelete = require('./../commands/delete');
+const date = require('./../commands/date');
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
@@ -39,6 +40,11 @@ module.exports = (bot, config, moedoo) => (msg) => {
   // message contains NOOICE (but no location) --- sending a NOOICE back!
   if (msg.text.search(/nooice/i) > -1) {
     bot.sendMessage(msg.chat.id, 'NOOICE!');
+    return;
+  }
+
+  if (msg.text.search(/da(y|te)/i) > -1) {
+    date(bot, msg);
     return;
   }
 
