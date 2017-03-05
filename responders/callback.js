@@ -92,6 +92,8 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
         FROM atm
         WHERE atm_id = $1;
       `, [data.id]).then((rows) => {
+        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+
         const atm = rows[0];
         bot.sendMessage(callbackQuery.message.chat.id, `*${atm.atm_bank_name}* 🏧`, { parse_mode: 'Markdown' });
 
