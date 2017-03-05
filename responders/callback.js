@@ -155,6 +155,8 @@ The moderators have been notified 📣
               }, () => {
                 bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
               });
+
+            return;
           }
 
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
