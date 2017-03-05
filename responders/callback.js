@@ -51,7 +51,8 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
             setTimeout(() => {
               // eslint-disable-next-line
               bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1]);
-            }, 128);
+            }, 250);
+
             return;
           }
 
@@ -59,7 +60,7 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
 *${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍
 
-Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within *${config.THRESHOLD}* meters`, {
+Just incase, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within *${config.THRESHOLD}* meters`, {
   parse_mode: 'Markdown',
 });
 
@@ -72,7 +73,7 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
                 inline_keyboard: inlineKeyboard,
               }),
             });
-          }, 128);
+          }, 250);
         }, () => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         });
@@ -188,7 +189,7 @@ The moderators have been notified 📣
         setTimeout(() => {
           // eslint-disable-next-line
           bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
-        }, 128);
+        }, 250);
       }, () => {
         bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
       });
