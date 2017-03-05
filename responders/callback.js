@@ -118,13 +118,18 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
 
     case 'B':
       moedoo
-        .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), '${config.BANKS[data.i]}', false) returning atm_bank_name, atm_timestamp;`)
-        .then((row) => {
-          if (row.length === 1) {
-            bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-
-            const atm = row[0];
-            bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! 🎉
+        .query(`SELECT atm_id
+                FROM atm
+                WHERE round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`)
+        .then((rows) => {
+          if (rows.length === 0) {
+            moedoo
+              .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), '${config.BANKS[data.i]}', false) returning atm_bank_name, atm_timestamp;`)
+              .then((rowsInsert) => {
+                if (rowsInsert.length === 1) {
+                  bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+                  const atm = rowsInsert[0];
+                  bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*! 🎉
 
 *${atm.atm_bank_name}*
 ${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
@@ -136,15 +141,28 @@ The moderators have been notified 📣
 `, {
   parse_mode: 'Markdown',
 });
-            // NOOICE...
-            setTimeout(() => {
-              bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
-            }, 1000);
 
-            return;
+                  // NOOICE...
+                  setTimeout(() => {
+                    bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
+                  }, 1000);
+
+                  return;
+                }
+
+                bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+              }, () => {
+                bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+              });
           }
 
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+          bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE* 🙌🏿
+
+*Thank you very much* for your contribution, tho there's already an 🏧 registered within *${config.THRESHOLD_REGISTER}* meters
+`, {
+  parse_mode: 'Markdown',
+});
         }, () => {
           bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
         });
