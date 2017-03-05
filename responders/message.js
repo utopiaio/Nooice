@@ -1,6 +1,9 @@
+/* eslint no-console: 0 */
+import moment from 'moment';
+
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
-module.exports = bot => (msg) => {
+module.exports = (bot, config, moedoo) => (msg) => {
   console.log(msg);
 
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
@@ -56,6 +59,34 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
   if (msg.text.search(/nooice/i) > -1) {
     bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
+  }
+
+  // listing all ATMS...
+  if (msg.text === '/list' && config.NOOICE.includes(msg.from.id)) {
+    moedoo.query(`
+      SELECT atm_id,
+             atm_bank_name,
+             ST_AsGeoJSON(atm_location) as atm_location,
+             atm_timestamp,
+             atm_approved,
+      FROM atm
+    `).then((rows) => {
+      console.log(rows);
+
+      const message = rows.map(atm => `*${atm.atm_bank_name}*
+${moment(atm.atm_timestamp).format('LLLL')}
+${moment(atm.atm_timestamp).fromNow()}
+Approved: ${atm.atm_approved ? 'Yes' : 'No'}`).join(`
+`);
+      bot.sendMessage(msg.chat.id, message, {
+        reply_to_message_id: msg.message_id,
+      });
+    }, (err) => {
+      console.log(err);
+      bot.sendMessage(msg.chat.id, 'NOOICE', {
+        reply_to_message_id: msg.message_id,
+      });
+    });
   }
 
   // message does not contain NOOICE!, sending NOOICE request

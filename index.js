@@ -25,7 +25,7 @@ const url = process.env.APP_URL || 'https://nooice.herokuapp.com:443';
 
 bot.setWebHook(`${url}/bot${TOKEN}`);
 
-bot.on('message', message(bot));
+bot.on('message', message(bot, config, moedoo));
 bot.on('callback_query', callbackQuery(bot, config, moedoo));
 
 moedoo.query(`
