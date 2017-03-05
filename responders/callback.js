@@ -88,7 +88,7 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
     case 'A': {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
-      const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, l: callbackQuery.message.reply_to_message.location }) }]);
+      const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index }) }]);
 
       moedoo
         .query(`SELECT atm_id
@@ -108,7 +108,7 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
 
           bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE*?
 
-*Thank you* for your contribution, but unfortunalty there's already an 🏧 registred within ${config.THRESHOLD_REGISTER} meters
+*Thank you* for your contribution, but unfortunalty there's already an 🏧 registred within *${config.THRESHOLD_REGISTER}* meters
 
 But you know what, I'm going to send a *NOOICE* your way 🙌🏿
 `, {
