@@ -141,7 +141,9 @@ The moderators have been notified 📣
 `, {
   parse_mode: 'Markdown',
 }).then(() => {
-  bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
+  bot.sendDocument(callbackQuery.message.chat.id, config.GIF, {
+    disable_notification: true,
+  });
 });
                   return;
                 }
