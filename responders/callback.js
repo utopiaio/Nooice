@@ -66,7 +66,7 @@ Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.
 
           // intentional delay to _guarantee_ location is sent after message
           setTimeout(() => {
-            const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `🏧 witin ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
+            const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `🏧 within ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
             // eslint-disable-next-line
             bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1], {
               reply_markup: JSON.stringify({
