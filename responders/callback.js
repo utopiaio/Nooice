@@ -16,6 +16,7 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
     case 'A':
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+      bot.sendDocument(callbackQuery.message.chat.id, 'http://i.giphy.com/PhKhSXofSAm3e.gif');
       return;
 
     default:
