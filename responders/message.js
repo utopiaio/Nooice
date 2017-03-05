@@ -39,7 +39,10 @@ Let us make it happen 🙌🏿
 Just send me your 📍 and I'll handle the rest
 
 PS
-Turn on your Wi-Fi to have better accuracy`);
+Turn on your Wi-Fi to have better accuracy
+
+PPS
+To register an 🏧 please 🙏🏿 make sure your GPS accuray is within 20 meters`);
     return;
   }
 
