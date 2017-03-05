@@ -11,19 +11,27 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
       return;
 
     case 'S':
-      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-      moedoo.query(`
-        SELECT atm_bank_name,
-              ST_AsGeoJSON(atm_location) as atm_location,
-              round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [$1, $2]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) as atm_distance
-        FROM atm
-        ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [$1, $2]}')
-        LIMIT 3;
-      `, [data.l.latitude, data.l.longitude]).then((rows) => {
-        console.log(rows);
-      }, (err) => {
-        console.log(err);
-      });
+      // preparing query is a bit _tricky_ (with the conversion n' all)
+      // so I'm going old school
+      if (`${data.l.latitude} ${data.l.longitude}`.search(/^\d+\.\d+ \d+\.\d+$/) === 0) {
+        moedoo.query(`
+          SELECT atm_bank_name,
+                ST_AsGeoJSON(atm_location) as atm_location,
+                round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l.latitude}, ${data.l.longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) as atm_distance
+          FROM atm
+          ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l.latitude}, ${data.l.longitude}]}')
+          LIMIT 3;
+        `).then((rows) => {
+          console.log(rows);
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+        }, (err) => {
+          console.log(err);
+          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+        });
+      } else {
+        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+      }
+
       return;
 
     case 'A':
