@@ -1,5 +1,10 @@
 /* eslint no-console: 0 */
-const moment = require('moment');
+const start = require('./../commands/start');
+const list = require('./../commands/list');
+const location = require('./../commands/location');
+const approve = require('./../commands/approve');
+const disapprove = require('./../commands/disapprove');
+const ndelete = require('./../commands/delete');
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
@@ -30,28 +35,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
 
   // /start
   if (msg.text === '/start') {
-    bot.sendMessage(msg.chat.id, `*NOOICE*!
-
-I am the bot that tells you where the nearest 🏧 is
-
-The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁)
-
-The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
-
-All data will be released under [WTFPL](http://www.wtfpl.net/) License on GitHub
-
-Let us make it happen 🙌🏿
-
-Just send me your 📍 and I'll handle the rest
-
-PS
-Turn on your Wi-Fi to have better accuracy
-
-PPS
-To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 meters*`, {
-  parse_mode: 'Markdown',
-  disable_web_page_preview: true,
-});
+    start(bot, msg);
     return;
   }
 
@@ -61,104 +45,31 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
     return;
   }
 
-  // listing all ATMS...
-  if (msg.text === '/list' && config.NOOICE.includes(msg.from.id)) {
-    moedoo.query(`
-      SELECT atm_id,
-             atm_bank_name,
-             ST_AsGeoJSON(atm_location) as atm_location,
-             atm_timestamp,
-             atm_approved
-      FROM atm
-    `).then((rows) => {
-      console.log(rows);
+  if (config.NOOICE.includes(msg.from.id)) {
+    if (msg.text === '/list') {
+      list(bot, msg, moedoo);
+      return;
+    }
 
-      const message = rows.map(atm => `${atm.atm_bank_name}
-${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
-${atm.atm_approved ? '✅' : '⏳'}
+    if (msg.text.search(/^\/location_\d+$/) === 0) {
+      location(msg, bot, moedoo);
+      return;
+    }
 
-/location_${atm.atm_id}
-/approve_${atm.atm_id}
-/disapprove_${atm.atm_id}
-/delete_${atm.atm_id}`).join(`
+    if (msg.text.search(/^\/approve_\d+$/) === 0) {
+      approve(bot, msg, moedoo);
+      return;
+    }
 
+    if (msg.text.search(/^\/disapprove_\d+$/) === 0) {
+      disapprove(bot, msg, moedoo);
+      return;
+    }
 
-`);
-      bot.sendMessage(msg.chat.id, message, {
-        reply_to_message_id: msg.message_id,
-      });
-    }, (err) => {
-      console.log(err);
-      bot.sendMessage(msg.chat.id, 'NOOICE?', {
-        reply_to_message_id: msg.message_id,
-      });
-    });
-
-    return;
-  }
-
-  if (msg.text.search(/^\/location_\d+$/) === 0) {
-    const atmId = Number.parseInt(msg.text.match(/^\/location_(\d+)$/)[1], 10);
-
-    moedoo
-      .query('SELECT ST_AsGeoJSON(atm_location) as atm_location FROM atm WHERE atm_id = $1', [atmId])
-      .then((rows) => {
-        if (rows.length === 1) {
-          const atm = rows[0];
-          bot.sendLocation(msg.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
-          return;
-        }
-
-        bot.sendMessage(msg.chat.id, 'NOOICE?');
-      }, (err) => {
-        console.log(err);
-      });
-    return;
-  }
-
-  if (msg.text.search(/^\/approve_\d+$/) === 0) {
-    const atmId = Number.parseInt(msg.text.match(/^\/approve_(\d+)$/)[1], 10);
-
-    moedoo
-      .query('UPDATE atm SET atm_approved=$1 WHERE atm_id=$2', [true, atmId])
-      .then(() => {
-        bot.sendMessage(msg.chat.id, 'NOOICE 👍🏿');
-      }, (err) => {
-        console.log(err);
-        bot.sendMessage(msg.chat.id, 'NOOICE?');
-      });
-
-    return;
-  }
-
-  if (msg.text.search(/^\/disapprove_\d+$/) === 0) {
-    const atmId = Number.parseInt(msg.text.match(/^\/disapprove_(\d+)$/)[1], 10);
-
-    moedoo
-      .query('UPDATE atm SET atm_approved=$1 WHERE atm_id=$2', [false, atmId])
-      .then(() => {
-        bot.sendMessage(msg.chat.id, 'NOOICE 👍🏿');
-      }, (err) => {
-        console.log(err);
-        bot.sendMessage(msg.chat.id, 'NOOICE?');
-      });
-
-    return;
-  }
-
-  if (msg.text.search(/^\/delete_\d+$/) === 0) {
-    const atmId = Number.parseInt(msg.text.match(/^\/delete_(\d+)$/)[1], 10);
-
-    moedoo
-      .query('DELETE FROM atm WHERE atm_id=$1', [atmId])
-      .then(() => {
-        bot.sendMessage(msg.chat.id, 'NOOICE 👍🏿');
-      }, (err) => {
-        console.log(err);
-        bot.sendMessage(msg.chat.id, 'NOOICE?');
-      });
-
-    return;
+    if (msg.text.search(/^\/delete_\d+$/) === 0) {
+      ndelete(bot, msg, moedoo);
+      return;
+    }
   }
 
   // message does not contain NOOICE!, sending NOOICE request
