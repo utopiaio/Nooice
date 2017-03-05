@@ -1,6 +1,8 @@
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
 module.exports = bot => (msg) => {
+  console.log(msg);
+
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
     /**
      * there's a 64 byte limit on `callback_data` hence the single letter types
