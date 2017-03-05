@@ -87,7 +87,11 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
 
     case 'A':
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-      bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
+      bot.sendMessage(callbackQuery.message.chat.id, `የማን ነው?
+
+${config.BANKS.map((bank, index) => `${index + 1}. ${bank} /bank_${index}`).join(`
+`)}`);
+      // bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
       return;
 
     case 'P':
