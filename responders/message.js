@@ -1,10 +1,6 @@
-/* eslint no-console: 0 */
-
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
 module.exports = bot => (msg) => {
-  console.log(msg);
-
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
     /**
      * there's a 64 byte limit on `callback_data` hence the single letter types
@@ -23,6 +19,27 @@ module.exports = bot => (msg) => {
       }),
     });
 
+    return;
+  }
+
+  // /start
+  if (msg.text === '/start') {
+    bot.sendMessage(msg.chat.id, `NOOICE!
+
+I am the bot that tells you where the nearest 🏧 is
+
+The initiative of this bot is to map out every 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁)
+
+The bot is **fully functional** with PostgreSQL + PostGIS and an approval system
+
+All data will be released under WTFPL License on GitHub
+
+Let us make it happen 🙌🏿
+
+Just send me your 📍 and I'll handle the rest
+
+PS
+Turn on your Wi-Fi to have better accuracy`);
     return;
   }
 
