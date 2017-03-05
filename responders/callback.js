@@ -88,8 +88,7 @@ Just incase, I'm sending you extra *${atmsInRange.length - 1}* 🏧${atmsInRange
     case 'A': {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
-      const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index }) }]);
-      console.log(callbackQuery.message.reply_to_message.location);
+      const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, l: callbackQuery.message.reply_to_message.location }) }]);
 
       moedoo
         .query(`SELECT atm_id
