@@ -3,6 +3,11 @@ const moment = require('moment');
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
   const data = JSON.parse(callbackQuery.data);
 
+  // avoid retyping for bad answerCallbackQuery nooices
+  const cqBadNooice = () => {
+    bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+  };
+
   switch (data.type) {
     case 'N':
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', true);
@@ -65,6 +70,7 @@ Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.
   disable_notification: true,
 }).then(() => {
   const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `🏧 within ${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
+
   // eslint-disable-next-line
   bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1], {
     reply_markup: JSON.stringify({
@@ -72,11 +78,9 @@ Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.
     }),
   });
 });
-        }, () => {
-          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-        });
+        }, cqBadNooice);
       } else {
-        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+        cqBadNooice();
       }
 
       return;
@@ -112,9 +116,7 @@ Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.
 `, {
   parse_mode: 'Markdown',
 });
-        }, () => {
-          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-        });
+        }, cqBadNooice);
 
       return;
     }
@@ -154,24 +156,20 @@ The moderators have been notified 📣
                   return;
                 }
 
-                bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-              }, () => {
-                bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-              });
+                cqBadNooice();
+              }, cqBadNooice);
 
             return;
           }
 
-          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+          cqBadNooice();
           bot.sendMessage(callbackQuery.message.chat.id, `*NOOICE* 🙌🏿
 
 *Thank you very much* for your contribution, tho there's already an 🏧 registered within *${config.THRESHOLD_REGISTER}* meters
 `, {
   parse_mode: 'Markdown',
 });
-        }, () => {
-          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-        });
+        }, cqBadNooice);
       return;
 
     // alternate ATM
@@ -197,12 +195,10 @@ The moderators have been notified 📣
             // eslint-disable-next-line
             bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
           });
-      }, () => {
-        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
-      });
+      }, cqBadNooice);
       return;
 
     default:
-      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
+      cqBadNooice();
   }
 };
