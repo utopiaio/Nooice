@@ -60,7 +60,7 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
 *${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍
 
-Just incase, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within *${config.THRESHOLD}* meters`, {
+Just in case, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within *${config.THRESHOLD}* meters`, {
   parse_mode: 'Markdown',
 });
 
@@ -136,7 +136,7 @@ Just incase, I'll send you extra *${atmsInRange.length - 1}* 🏧${atmsInRange.l
 *${atm.atm_bank_name}*
 ${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
 
-አመሰግናለው 🙌🏿, Have a *NOOICE*!
+አመሰግናለው 🙌🏿
 
 PS
 The moderators have been notified 📣
