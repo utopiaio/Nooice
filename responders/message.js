@@ -10,6 +10,13 @@ const geezer = require('./../commands/geezer');
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
 module.exports = (bot, config, moedoo) => (msg) => {
+  // 9:14 launch...
+  // PS: `!` is difficult to notice; so I prefer === false
+  if (config.NOOICE.includes(msg.from.id) === false) {
+    bot.sendMessage(msg.chat.id, 'Ask Siri about 9:14');
+    return;
+  }
+
   if (Object.prototype.hasOwnProperty.call(msg, 'location')) {
     /**
      * there's a 64 byte limit on `callback_data` hence the single letter types
