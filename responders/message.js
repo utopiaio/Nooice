@@ -77,16 +77,20 @@ To register an 🏧 please 🙏🏿 make sure your GPS accuray is within *20 met
 ${moment(atm.atm_timestamp).format('LLLL')}
 ${moment(atm.atm_timestamp).fromNow()}
 Approved: ${atm.atm_approved ? 'Yes' : 'No'}`).join(`
+
 `);
       bot.sendMessage(msg.chat.id, message, {
         reply_to_message_id: msg.message_id,
+        parse_mode: 'Markdown',
       });
     }, (err) => {
       console.log(err);
-      bot.sendMessage(msg.chat.id, 'NOOICE', {
+      bot.sendMessage(msg.chat.id, 'NOOICE?', {
         reply_to_message_id: msg.message_id,
       });
     });
+
+    return;
   }
 
   // message does not contain NOOICE!, sending NOOICE request
