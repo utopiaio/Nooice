@@ -11,9 +11,11 @@ module.exports = (bot, msg, moedoo) => {
            atm_approved
     FROM atm
     WHERE atm_approved = false
+    ORDER BY atm_id DESC
   `).then((rows) => {
     const message = rows.map(atm => `${atm.atm_bank_name}
-${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
+${moment(atm.atm_timestamp).utc().add(3, 'hours').format('MMMM DD, YYYY')}
+${moment(atm.atm_timestamp).utc().add(3, 'hours').format('HH:mm:ss')}
 
 /location_${atm.atm_id}
 /approve_${atm.atm_id}
