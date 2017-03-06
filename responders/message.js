@@ -106,10 +106,9 @@ module.exports = (bot, config, moedoo) => (msg) => {
     reply_markup: JSON.stringify({
       keyboard: [
         [{ text: 'Send 📍', request_location: true }],
-        [{ text: 'ቀን / Date' }],
-        [{ text: 'Just say NOOICE!' }],
+        [{ text: 'ቀን / Date' }, { text: 'NOOICE!' }],
       ],
-      one_time_keyboard: true,
+      one_time_keyboard: false,
     }),
   });
 };
