@@ -10,25 +10,20 @@ module.exports = (bot, msg, moedoo) => {
            atm_timestamp,
            atm_approved
     FROM atm
+    WHERE atm_approved = false
   `).then((rows) => {
-    const approvedATMs = rows.filter(atm => atm.atm_approved);
     const message = rows.map(atm => `${atm.atm_bank_name}
 ${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}
-${atm.atm_approved ? '✅' : '⏳'}
 
 /location_${atm.atm_id}
 /approve_${atm.atm_id}
-/disapprove_${atm.atm_id}
 /delete_${atm.atm_id}`).join(`
 
 
 `);
-    bot.sendMessage(msg.chat.id, message ? `${message}
-
-✅ ${approvedATMs.length}
-⏳ ${rows.length - approvedATMs.length}` : 'No 🏧 😔', {
-  reply_to_message_id: msg.message_id,
-});
+    bot.sendMessage(msg.chat.id, message || '🙌🏿', {
+      reply_to_message_id: msg.message_id,
+    });
   }, () => {
     bot.sendMessage(msg.chat.id, 'NOOICE?', {
       reply_to_message_id: msg.message_id,

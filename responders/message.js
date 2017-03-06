@@ -2,6 +2,7 @@ const start = require('./../commands/start');
 const list = require('./../commands/list');
 const location = require('./../commands/location');
 const approve = require('./../commands/approve');
+const pending = require('./../commands/pending');
 const disapprove = require('./../commands/disapprove');
 const ndelete = require('./../commands/delete');
 const date = require('./../commands/date');
@@ -69,6 +70,11 @@ module.exports = (bot, config, moedoo) => (msg) => {
   if (config.NOOICE.includes(msg.from.id)) {
     if (msg.text === '/list') {
       list(bot, msg, moedoo);
+      return;
+    }
+
+    if (msg.text === '/pending') {
+      pending(bot, msg, moedoo);
       return;
     }
 
