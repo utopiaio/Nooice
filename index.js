@@ -42,6 +42,11 @@ moedoo.query(`
     CONSTRAINT atm_pk PRIMARY KEY (atm_id)
   );
 
+  CREATE TABLE IF NOT EXISTS nooice (
+    nooice_id serial NOT NULL, -- telegram user_id will be used as PK
+    CONSTRAINT nooice_id PRIMARY KEY (nooice_id),
+  );
+
   -- test data
   -- INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [9.0199, 38.7969]}'), 'Commercial Bank of Ethiopia', true);
 `)
