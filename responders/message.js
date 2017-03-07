@@ -108,6 +108,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
         [{ text: 'Send 📍', request_location: true }],
         [{ text: 'ቀን / Date' }, { text: 'NOOICE!' }],
       ],
+      resize_keyboard: true,
       one_time_keyboard: false,
     }),
   });
