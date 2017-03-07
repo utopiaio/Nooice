@@ -44,7 +44,7 @@ moedoo.query(`
 
   CREATE TABLE IF NOT EXISTS nooice (
     nooice_id serial NOT NULL, -- telegram user_id will be used as PK
-    CONSTRAINT nooice_id PRIMARY KEY (nooice_id),
+    CONSTRAINT nooice_id PRIMARY KEY (nooice_id)
   );
 
   -- test data
