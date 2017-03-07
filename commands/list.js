@@ -13,7 +13,7 @@ module.exports = (bot, msg, moedoo) => {
     ORDER BY atm_id DESC
   `).then((rows) => {
     const approvedATMs = rows.filter(atm => atm.atm_approved);
-    const message = rows.map(atm => `${atm.atm_bank_name}
+    const message = rows.slice(0, 10).map(atm => `${atm.atm_bank_name}
 ${moment(atm.atm_timestamp).utc().add(3, 'hours').format('MMMM DD, YYYY')}
 ${moment(atm.atm_timestamp).utc().add(3, 'hours').format('HH:mm:ss')}
 ${atm.atm_approved ? '✅' : '⏳'}
