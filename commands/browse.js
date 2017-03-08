@@ -9,6 +9,10 @@ module.exports = (config, bot, chatId, location, moedoo) => {
         .then((atms) => {
           const msg = atms.map(atm => `🏦 ${atm.atm_bank_name} 🏧\n📍 ${Number.parseInt(atm.atm_distance, 10).toLocaleString('us')} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}\n/location_${atm.atm_id}`).join('\n\n');
 
+          // t: total
+          // d: delta
+          // c: current
+          // l: location
           bot.sendMessage(chatId, msg, {
             reply_markup: JSON.stringify({
               inline_keyboard: [[

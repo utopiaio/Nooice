@@ -5,8 +5,6 @@ const browse = require('./../commands/browse');
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
   const data = JSON.parse(callbackQuery.data);
 
-  console.log(data);
-
   // avoid retyping for bad answerCallbackQuery nooices
   const cqBadNooice = () => {
     bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
@@ -24,20 +22,18 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
     case 'NAV': {
       // first page
       if (data.c === 0 && data.d === -1) {
-        console.log('start');
-        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
+        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE Start', false);
         return;
       }
 
       // last page
       if (data.c + data.d === data.t) {
-        console.log('end');
-        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
+        bot.answerCallbackQuery(callbackQuery.id, 'NOOICE End', false);
         return;
       }
 
       const current = data.c + data.d;
-      bot.answerCallbackQuery(callbackQuery.id, `NOOICE ${current + 1}`, false);
+      bot.answerCallbackQuery(callbackQuery.id, `NOOICE Showing ${current + 1}`, false);
 
       moedoo
         .query(`SELECT atm_id, atm_bank_name, ST_AsGeoJSON(atm_location) as atm_location, round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l[0]}, ${data.l[1]}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) as atm_distance FROM atm WHERE atm_approved = true ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l[0]}, ${data.l[1]}]}') LIMIT ${config.PER_PAGE} OFFSET ${current * config.PER_PAGE};`)
