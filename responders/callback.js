@@ -17,6 +17,10 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', true);
       return;
 
+    case 'STY':
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
+      return;
+
     // send nearest ATM
     case 'S':
       bot.sendChatAction(callbackQuery.message.chat.id, 'find_location');
