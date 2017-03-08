@@ -5,7 +5,7 @@ const browse = require('./../commands/browse');
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
   const data = JSON.parse(callbackQuery.data);
 
-  console.log(data, callbackQuery);
+  console.log(data);
 
   // avoid retyping for bad answerCallbackQuery nooices
   const cqBadNooice = () => {
@@ -21,22 +21,38 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
       return;
 
-    case 'NXT':
-    case 'PRV': {
+    case 'NAV': {
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
-      const total = 44;
 
-      bot.editMessageText('UPDATE', {
-        message_id: callbackQuery.message.message_id,
-        chat_id: callbackQuery.message.chat.id,
-        reply_markup: JSON.stringify({
-          inline_keyboard: [[
-            { text: '←', callback_data: JSON.stringify({ type: 'PRV', c: total, p: 1, l: data.l }) },
-            { text: `2 of ${Math.ceil(total / config.PER_PAGE)}`, callback_data: JSON.stringify({ type: 'STY' }) },
-            { text: '→', callback_data: JSON.stringify({ type: 'NXT', c: total, p: 2, l: data.l }) },
-          ]],
-        }),
-      });
+      // first page
+      if (data.c === 0 && data.d === -1) {
+        return;
+      }
+
+      // last page
+      if (data.c + data.d === data.t) {
+        return;
+      }
+
+      const current = data.c + data.d;
+
+      moedoo
+        .query(`SELECT atm_id, atm_bank_name, ST_AsGeoJSON(atm_location) as atm_location, round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l[0]}, ${data.l[1]}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) as atm_distance FROM atm WHERE atm_approved = true ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l[0]}, ${data.l[1]}]}') LIMIT ${config.PER_PAGE} OFFSET ${current * config.PER_PAGE};`)
+        .then((atms) => {
+          const msg = atms.map(atm => `🏦 ${atm.atm_bank_name} 🏧\n📍 ${Number.parseInt(atm.atm_distance, 10).toLocaleString('us')} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}\n/location_${atm.atm_id}`).join('\n\n');
+
+          bot.editMessageText(msg, {
+            message_id: callbackQuery.message.message_id,
+            chat_id: callbackQuery.message.chat.id,
+            reply_markup: JSON.stringify({
+              inline_keyboard: [[
+                { text: '←', callback_data: JSON.stringify({ type: 'NAV', t: data.t, d: -1, c: current, l: data.l }) },
+                { text: `${current + 1} of ${data.t}`, callback_data: JSON.stringify({ type: 'STY' }) },
+                { text: '→', callback_data: JSON.stringify({ type: 'NAV', t: data.t, d: 1, c: current, l: data.l }) },
+              ]],
+            }),
+          });
+        });
       return;
     }
 
