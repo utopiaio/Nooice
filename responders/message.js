@@ -45,47 +45,8 @@ module.exports = (bot, config, moedoo) => (msg) => {
             }),
           });
         } else {
-
-        moedoo.query(`
-          SELECT atm_id,
-                 atm_bank_name,
-                 ST_AsGeoJSON(atm_location) as atm_location,
-                 round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${msg.location.latitude}, ${msg.location.longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) as atm_distance
-          FROM atm
-          WHERE atm_approved = true
-          ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l.latitude}, ${data.l.longitude}]}')
-          LIMIT 3;
-        `).then((rows) => {
-          // eslint-disable-next-line
-          const atmsInRange = rows.filter(atm => Number.parseInt(atm.atm_distance, 10) <= config.THRESHOLD);
-
-          // no ATMS in rage --- sending browse mode...
-          if (rows.length === 0 || atmsInRange.length === 0) {
-            bot.sendMessage(
-              msg.chat.id,
-              `😔 Could not find an 🏧 within *${config.THRESHOLD}* meters
-
-              So instead I'll send you all 🏧s ordered from *nearest* to *furthest*`, {
-                parse_mode: 'Markdown',
-              });
-
-            // TODO: browse mode
-            return;
-
-          if (atmsInRange.length === 1) {
-            bot.sendMessage(msg.chat.id, `*NOOICE*!
-
-*${atmsInRange[0].atm_bank_name}* 🏧 is within *${atmsInRange[0].atm_distance}* meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} form your 📍`, {
-  parse_mode: 'Markdown',
-  disable_notification: true,
-}).then(() => {
-  // eslint-disable-next-line
-  bot.sendLocation(msg.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1]);
-});
-            return;
-          }
-
-          bot.sendMessage(msg.chat.id, 'In Progress');
+          bot.sendMessage(msg.chat.id, `In Progress
+            \nsecond line!`);
         }
       }, () => {
         bot.sendMessage(msg.chat.id, 'NOOICE?');
