@@ -1,3 +1,5 @@
+const browse = require('./browse');
+
 module.exports = (config, bot, msg, moedoo) => {
   moedoo
     .query(`SELECT atm_id, atm_bank_name, ST_AsGeoJSON(atm_location) as atm_location, round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${msg.location.latitude}, ${msg.location.longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) as atm_distance FROM atm WHERE atm_approved = true ORDER BY atm_location <-> ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${msg.location.latitude}, ${msg.location.longitude}]}') LIMIT 3;`)
@@ -6,8 +8,12 @@ module.exports = (config, bot, msg, moedoo) => {
       const atmsInRange = atms.filter(atm => Number.parseInt(atm.atm_distance, 10) <= config.THRESHOLD);
 
       if (atms.length === 0 || atmsInRange.length === 0) {
-        bot.sendMessage(msg.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters\n\nSo instead I'm going to send you all 🏧s ordered from nearest to furthest`);
-        // TODO: call browse
+        bot
+          .sendMessage(msg.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters\n\nSo instead I'm going to send you all 🏧s ordered from nearest to furthest`)
+          .then(() => {
+            browse(config, bot, msg.chat.id, msg.location, moedoo);
+          });
+
         return;
       }
 
