@@ -15,6 +15,8 @@ const NOOICE = [266005847];
 // Nooice
 const GIF = 'http://i.giphy.com/PhKhSXofSAm3e.gif';
 
+const PER_PAGE = 5;
+
 // BANKS - Nemo! 🙌
 const BANKS = [
   'Abay Bank',
@@ -55,6 +57,8 @@ module.exports = {
   NOOICE,
 
   GIF,
+
+  PER_PAGE,
 
   BANKS,
 
