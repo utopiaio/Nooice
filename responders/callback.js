@@ -5,7 +5,7 @@ const browse = require('./../commands/browse');
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
   const data = JSON.parse(callbackQuery.data);
 
-  console.log(data);
+  console.log(data, callbackQuery);
 
   // avoid retyping for bad answerCallbackQuery nooices
   const cqBadNooice = () => {
@@ -20,6 +20,25 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
     case 'STY':
       bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
       return;
+
+    case 'NXT':
+    case 'PRV': {
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE', false);
+      const total = 44;
+
+      bot.editMessageText('UPDATE', {
+        message_id: callbackQuery.message.message_id,
+        chat_id: callbackQuery.message.chat.id,
+        reply_markup: JSON.stringify({
+          inline_keyboard: [[
+            { text: '←', callback_data: JSON.stringify({ type: 'PRV', c: total, p: 1, l: data.l }) },
+            { text: `2 of ${Math.ceil(total / config.PER_PAGE)}`, callback_data: JSON.stringify({ type: 'STY' }) },
+            { text: '→', callback_data: JSON.stringify({ type: 'NXT', c: total, p: 2, l: data.l }) },
+          ]],
+        }),
+      });
+      return;
+    }
 
     // send nearest ATM
     case 'S':
