@@ -4,7 +4,7 @@ module.exports = (bot, msg, moedoo) => {
   moedoo
     .query('DELETE FROM nooice WHERE nooice_id=$1 returning nooice_id;', [msg.from.id])
     .then((rows) => {
-      bot.sendMessage(msg.chat.id, rows.length === 1 ? 'NOOICE 😔You\'ve successfully unregistered\n\nThank you for all your contributions. From now on whenever you send me your location I\'ll reply with nearby 🏧s' : 'NOOICE?\nYou have to register to unregister', {
+      bot.sendMessage(msg.chat.id, rows.length === 1 ? 'NOOICE 😔\nYou\'ve successfully unregistered\n\nThank you for all your contributions. From now on whenever you send me your location I\'ll reply with nearby 🏧s' : 'NOOICE?\nYou have to register to unregister', {
         reply_markup: JSON.stringify({
           keyboard: [
             [{ text: 'Send 📍', request_location: true }],
