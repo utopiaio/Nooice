@@ -30,16 +30,26 @@ module.exports = (bot, config, moedoo) => (msg) => {
      */
     bot.sendChatAction(msg.chat.id, 'typing');
 
-    bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
-      reply_to_message_id: msg.message_id,
-      reply_markup: JSON.stringify({
-        inline_keyboard: [
-          [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
-          [{ text: '😇 Register an 🏧 📍', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
-          [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
-        ],
-      }),
-    });
+    moedoo
+      .query('SELECT nooice_id FROM nooice WHERE nooice_id=$1', [msg.from.id])
+      .then((rows) => {
+        if (rows.length === 1) {
+          bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
+            reply_to_message_id: msg.message_id,
+            reply_markup: JSON.stringify({
+              inline_keyboard: [
+                [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: msg.location }) }],
+                [{ text: '😇 Register an 🏧 📍', callback_data: JSON.stringify({ type: 'A', l: msg.location }) }],
+                [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
+              ],
+            }),
+          });
+        } else {
+          bot.sendMessage(msg.chat.id, 'In Progress');
+        }
+      }, () => {
+        bot.sendMessage(msg.chat.id, 'NOOICE?');
+      });
 
     return;
   }
