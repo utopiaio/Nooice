@@ -5,6 +5,8 @@ const browse = require('./../commands/browse');
 module.exports = (bot, config, moedoo) => (callbackQuery) => {
   const data = JSON.parse(callbackQuery.data);
 
+  console.log(data);
+
   // avoid retyping for bad answerCallbackQuery nooices
   const cqBadNooice = () => {
     bot.answerCallbackQuery(callbackQuery.id, 'NOOICE?', false);
