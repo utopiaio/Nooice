@@ -91,6 +91,11 @@ module.exports = (bot, config, moedoo) => (msg) => {
     return;
   }
 
+  if (msg.text.search(/^\/location_\d+$/) === 0) {
+    location(bot, msg, moedoo);
+    return;
+  }
+
   // NOOICE 👑 actions
   if (config.NOOICE.includes(msg.from.id)) {
     if (msg.text === '/list') {
@@ -100,11 +105,6 @@ module.exports = (bot, config, moedoo) => (msg) => {
 
     if (msg.text === '/pending') {
       pending(bot, msg, moedoo);
-      return;
-    }
-
-    if (msg.text.search(/^\/location_\d+$/) === 0) {
-      location(bot, msg, moedoo);
       return;
     }
 
