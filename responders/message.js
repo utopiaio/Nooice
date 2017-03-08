@@ -59,7 +59,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
 
   // /start
   if (msg.text === '/start') {
-    start(bot, msg);
+    start(bot, msg, moedoo);
     return;
   }
 
