@@ -12,9 +12,9 @@ module.exports = (config, bot, chatId, location, moedoo) => {
           bot.sendMessage(chatId, `${msg}`, {
             reply_markup: JSON.stringify({
               inline_keyboard: [[
-                { text: '←', callback_data: JSON.stringify({ type: 'PRV', c: total, p: '0', l: [location.latitude, location.longitude] }) },
+                { text: '←', callback_data: JSON.stringify({ type: 'PRV', c: total, p: 0, l: [location.latitude, location.longitude] }) },
                 { text: `1 of ${Math.ceil(total / config.PER_PAGE)}`, callback_data: JSON.stringify({ type: 'STY' }) },
-                { text: '→', callback_data: JSON.stringify({ type: 'NXT', c: total, p: '1', l: [location.latitude, location.longitude] }) },
+                { text: '→', callback_data: JSON.stringify({ type: 'NXT', c: total, p: 1, l: [location.latitude, location.longitude] }) },
               ]],
             }),
           });
