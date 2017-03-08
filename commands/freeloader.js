@@ -6,7 +6,7 @@ module.exports = (config, bot, msg, moedoo) => {
       const atmsInRange = atms.filter(atm => Number.parseInt(atm.atm_distance, 10) <= config.THRESHOLD);
 
       if (atms.length === 0 || atmsInRange.length === 0) {
-        bot.sendMessage(msg.chat.id, `😔 Could not find an 🏧 within *${config.THRESHOLD}* meters\n\nSo instead I'm going to send you all 🏧s ordered from nearest to furthest`);
+        bot.sendMessage(msg.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters\n\nSo instead I'm going to send you all 🏧s ordered from nearest to furthest`);
         // TODO: call browse
         return;
       }

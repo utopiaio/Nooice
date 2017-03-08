@@ -9,7 +9,7 @@ const date = require('./../commands/date');
 const geezer = require('./../commands/geezer');
 const register = require('./../commands/register');
 const unregister = require('./../commands/unregister');
-const locationFreeloader = require('./../commands/locationFreeloader');
+const freeloader = require('./../commands/freeloader');
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
@@ -49,7 +49,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
           return;
         }
 
-        locationFreeloader(config, bot, msg, moedoo);
+        freeloader(config, bot, msg, moedoo);
       }, () => {
         bot.sendMessage(msg.chat.id, 'NOOICE?');
       });
