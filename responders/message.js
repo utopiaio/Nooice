@@ -9,6 +9,7 @@ const date = require('./../commands/date');
 const geezer = require('./../commands/geezer');
 const register = require('./../commands/register');
 const unregister = require('./../commands/unregister');
+const locationFreeloader = require('./../commands/locationFreeloader');
 
 // all will happen inside a `message` - middleware will be applied
 // to break the monolithic crap here
@@ -32,8 +33,8 @@ module.exports = (bot, config, moedoo) => (msg) => {
 
     moedoo
       .query('SELECT nooice_id FROM nooice WHERE nooice_id=$1', [msg.from.id])
-      .then((rows) => {
-        if (rows.length === 1) {
+      .then((contributors) => {
+        if (contributors.length === 1) {
           bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
             reply_to_message_id: msg.message_id,
             reply_markup: JSON.stringify({
@@ -44,10 +45,11 @@ module.exports = (bot, config, moedoo) => (msg) => {
               ],
             }),
           });
-        } else {
-          bot.sendMessage(msg.chat.id, `In Progress
-            \nsecond line!`);
+
+          return;
         }
+
+        locationFreeloader(config, bot, msg, moedoo);
       }, () => {
         bot.sendMessage(msg.chat.id, 'NOOICE?');
       });
