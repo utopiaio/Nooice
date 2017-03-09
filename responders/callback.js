@@ -117,24 +117,13 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
       const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
       const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, la: latitude, lo: longitude }) }]);
 
-      moedoo
-        .query(`SELECT atm_id FROM atm WHERE round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${latitude}, ${longitude}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`)
-        .then((rows) => {
-          bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
-
-          if (rows.length === 0) {
-            bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
-              reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
-              reply_markup: JSON.stringify({
-                inline_keyboard: inlineKeyboard,
-              }),
-            });
-
-            return;
-          }
-
-          bot.sendMessage(callbackQuery.message.chat.id, `NOOICE 🙌🏿\n\nThank you very much for your contribution, tho there's already an 🏧 registered within ${config.THRESHOLD_REGISTER} meters`);
-        }, cqBadNooice);
+      bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
+      bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
+        reply_to_message_id: callbackQuery.message.reply_to_message.message_id,
+        reply_markup: JSON.stringify({
+          inline_keyboard: inlineKeyboard,
+        }),
+      });
 
       return;
     }
@@ -144,11 +133,11 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
       bot.sendChatAction(callbackQuery.message.chat.id, 'typing');
 
       moedoo
-        .query(`SELECT atm_id FROM atm WHERE round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`)
+        .query(`SELECT atm_id FROM atm WHERE atm_bank_name = $1 AND round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`, [config.BANKS[data.i]])
         .then((rows) => {
           if (rows.length === 0) {
             moedoo
-              .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), '${config.BANKS[data.i]}', false) returning atm_bank_name, atm_timestamp;`)
+              .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), $1, false) returning atm_bank_name, atm_timestamp;`, [config.BANKS[data.i]])
               .then((rowsInsert) => {
                 if (rowsInsert.length === 1) {
                   bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
