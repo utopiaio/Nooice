@@ -16,7 +16,7 @@ The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help 
 
 The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
 
-All data will be released under [WTFPL](http://www.wtfpl.net/) License on GitHub
+All data is released under [The Unlicense](http://unlicense.org/) License on [GitHub]()
 
 Let us (keep) ~mak(e)(ing)~ it happen 🙌🏿
 
@@ -39,7 +39,7 @@ The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help 
 
 The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
 
-All data will be released under [WTFPL](http://www.wtfpl.net/) License on GitHub
+All data is released under [The Unlicense](http://unlicense.org/) License on [GitHub]()
 
 Let us make it happen 🙌🏿
 
