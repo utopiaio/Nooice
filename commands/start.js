@@ -18,7 +18,7 @@ The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
 
 All data will be released under [WTFPL](http://www.wtfpl.net/) License on GitHub
 
-Let us [keep] ~make[ing]~ it happen 🙌🏿
+Let us (keep) ~mak(e)(ing)~ it happen 🙌🏿
 
 Just send me your 📍 and I'll handle the rest
 
