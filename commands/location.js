@@ -9,12 +9,12 @@ module.exports = (bot, msg, moedoo) => {
       if (rows.length === 1) {
         const atm = rows[0];
 
-        bot.sendMessage(msg.chat.id, `🏦 ${atm.atm_bank_name}`, {
-          disable_notification: true,
-        }).then(() => {
-          // eslint-disable-next-line
-          bot.sendLocation(msg.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
-        });
+        bot
+          .sendMessage(msg.chat.id, `🏦 ${atm.atm_bank_name}`, { disable_notification: true })
+          .then(() => {
+            // eslint-disable-next-line
+            bot.sendLocation(msg.chat.id, JSON.parse(atm.atm_location).coordinates[0], JSON.parse(atm.atm_location).coordinates[1]);
+          });
 
         return;
       }

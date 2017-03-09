@@ -1,6 +1,6 @@
 module.exports = (config, bot, chatId, location, moedoo) => {
   moedoo
-    .query('SELECT count(atm_id) as atm_count from atm')
+    .query('SELECT count(atm_id) as atm_count from atm;')
     .then((atmsCount) => {
       const total = Math.ceil(Number.parseInt(atmsCount[0].atm_count, 10) / config.PER_PAGE);
 
