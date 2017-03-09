@@ -23,9 +23,7 @@ module.exports = (config, bot, callbackQuery, moedoo) => {
                   chat_id: callbackQuery.message.chat.id,
                 })
                 .then(() => {
-                  bot.sendDocument(callbackQuery.message.chat.id, config.GIF, {
-                    disable_notification: true,
-                  });
+                  bot.sendDocument(callbackQuery.message.chat.id, config.GIF);
                 });
 
               return;
