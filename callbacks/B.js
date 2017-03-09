@@ -7,11 +7,11 @@ module.exports = (config, bot, callbackQuery, moedoo) => {
   };
 
   moedoo
-    .query(`SELECT atm_id FROM atm WHERE atm_bank_name = $1 AND round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER};`, [config.BANKS[data.i]])
+    .query(`SELECT atm_id FROM atm WHERE atm_bank_name = $1 AND round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l[0]}, ${data.l[1]}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER};`, [config.BANKS[data.i]])
     .then((rows) => {
       if (rows.length === 0) {
         moedoo
-          .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), $1, false) returning atm_bank_name, atm_timestamp;`, [config.BANKS[data.i]])
+          .query(`INSERT INTO atm (atm_location, atm_bank_name, atm_approved) VALUES (ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.l[0]}, ${data.l[1]}]}'), $1, false) returning atm_bank_name, atm_timestamp;`, [config.BANKS[data.i]])
           .then((rowsInsert) => {
             if (rowsInsert.length === 1) {
               bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
