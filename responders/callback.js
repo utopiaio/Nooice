@@ -130,8 +130,6 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
 
     // add new ATM [finalization]
     case 'B':
-      bot.sendChatAction(callbackQuery.message.chat.id, 'typing');
-
       moedoo
         .query(`SELECT atm_id FROM atm WHERE atm_bank_name = $1 AND round(CAST(ST_Distance_Spheroid(atm_location, ST_GeomFromGeoJSON('{"type": "point", "coordinates": [${data.la}, ${data.lo}]}'), 'SPHEROID["WGS 84",6378137,298.257223563]') as numeric), 0) <= ${config.THRESHOLD_REGISTER}`, [config.BANKS[data.i]])
         .then((rows) => {
