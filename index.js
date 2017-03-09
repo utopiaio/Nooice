@@ -10,8 +10,8 @@ const moedoo = require('./lib/moedoo')(process.env.DATABASE_URL || {
   DB_PORT: config.DB_PORT,
   DB_NAME: config.DB_NAME,
 });
-const message = require('./responders/message.js');
-const callbackQuery = require('./responders/callback.js');
+const message = require('./responders/message');
+const callbackQuery = require('./responders/callback');
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
 
