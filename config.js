@@ -42,7 +42,7 @@ const BANKS = [
 
 // threshold in meters to disable search and re-submission
 const THRESHOLD = 500;
-const THRESHOLD_REGISTER = 30;
+const THRESHOLD_REGISTER = 50;
 
 module.exports = {
   DB_HOST,
