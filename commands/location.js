@@ -4,7 +4,7 @@ module.exports = (bot, msg, moedoo) => {
   const atmId = Number.parseInt(msg.text.match(/^\/location_(\d+)$/)[1], 10);
 
   moedoo
-    .query('SELECT atm_bank_name, ST_AsGeoJSON(atm_location) as atm_location FROM atm WHERE atm_id = $1', [atmId])
+    .query('SELECT atm_bank_name, ST_AsGeoJSON(atm_location) as atm_location FROM atm WHERE atm_id = $1;', [atmId])
     .then((rows) => {
       if (rows.length === 1) {
         const atm = rows[0];

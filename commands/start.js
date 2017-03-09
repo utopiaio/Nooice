@@ -2,7 +2,7 @@ module.exports = (bot, msg, moedoo) => {
   bot.sendChatAction(msg.chat.id, 'typing');
 
   moedoo
-    .query('SELECT count(atm_id) as atm_count from atm')
+    .query('SELECT count(atm_id) as atm_count from atm;')
     .then((atmsCount) => {
       const total = Number.parseInt(atmsCount[0].atm_count, 10);
 
