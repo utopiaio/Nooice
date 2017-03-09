@@ -32,7 +32,7 @@ module.exports = (bot, config, moedoo) => (msg) => {
     bot.sendChatAction(msg.chat.id, 'typing');
 
     moedoo
-      .query('SELECT nooice_id FROM nooice WHERE nooice_id=$1', [msg.from.id])
+      .query('SELECT nooice_id FROM nooice WHERE nooice_id=$1;', [msg.from.id])
       .then((contributors) => {
         if (contributors.length === 1) {
           bot.sendMessage(msg.chat.id, 'NOOICE! 📍', {
