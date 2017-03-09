@@ -144,7 +144,10 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
                   const atm = rowsInsert[0];
 
                   bot
-                    .sendMessage(callbackQuery.message.chat.id, `NOOICE! 🎉\n\n🏦 ${atm.atm_bank_name}\n${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}\n\nአመሰግናለው 🙌🏿\n\nPS\nThe moderators have been notified 📣`)
+                    .editMessageText(`NOOICE! 🎉\n\n🏦 ${atm.atm_bank_name}\n${moment(atm.atm_timestamp).format('MMMM DD, YYYY')}\n\nአመሰግናለው 🙌🏿\n\nPS\nThe moderators have been notified 📣`, {
+                      message_id: callbackQuery.message.message_id,
+                      chat_id: callbackQuery.message.chat.id,
+                    })
                     .then(() => {
                       bot.sendDocument(callbackQuery.message.chat.id, config.GIF, {
                         disable_notification: true,
@@ -161,7 +164,11 @@ module.exports = (bot, config, moedoo) => (callbackQuery) => {
           }
 
           cqBadNooice();
-          bot.sendMessage(callbackQuery.message.chat.id, `NOOICE 🙌🏿\n\nThank you very much for your contribution, tho there's already an 🏧 registered within ${config.THRESHOLD_REGISTER} meters`);
+          bot
+            .editMessageText(`NOOICE 🙌🏿\n\nThank you very much for your contribution, tho there's already an 🏧 registered within ${config.THRESHOLD_REGISTER} meters`, {
+              message_id: callbackQuery.message.message_id,
+              chat_id: callbackQuery.message.chat.id,
+            });
         }, cqBadNooice);
       return;
 
