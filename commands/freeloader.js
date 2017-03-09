@@ -11,7 +11,7 @@ module.exports = (config, bot, msg, moedoo) => {
         bot
           .sendMessage(msg.chat.id, `😔 Could not find an 🏧 within ${config.THRESHOLD} meters\n\nSo instead I'm going to send you all 🏧s ordered from nearest to furthest`)
           .then(() => {
-            browse(config, bot, msg.chat.id, msg.location, moedoo);
+            browse(config, bot, msg.chat.id, [msg.location.latitude, msg.location.longitude], moedoo);
           });
 
         return;

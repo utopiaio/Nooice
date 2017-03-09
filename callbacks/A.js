@@ -1,8 +1,9 @@
 module.exports = (config, bot, callbackQuery) => {
+  const data = JSON.parse(callbackQuery.data);
+
   bot.sendChatAction(callbackQuery.message.chat.id, 'typing');
 
-  const { latitude, longitude } = callbackQuery.message.reply_to_message.location;
-  const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, l: [latitude, longitude] }) }]);
+  const inlineKeyboard = config.BANKS.map((bank, index) => [{ text: bank, callback_data: JSON.stringify({ type: 'B', i: index, l: data.l }) }]);
 
   bot.answerCallbackQuery(callbackQuery.id, 'NOOICE!', false);
   bot.sendMessage(callbackQuery.message.chat.id, 'የማን ነው?', {
