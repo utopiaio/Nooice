@@ -39,9 +39,9 @@ module.exports = (bot, config, moedoo) => (msg) => {
             reply_to_message_id: msg.message_id,
             reply_markup: JSON.stringify({
               inline_keyboard: [
-                [{ text: 'Send me the nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: [msg.location.latitude, msg.location.longitude] }) }],
+                [{ text: 'Send Nearest 🏧 📍', callback_data: JSON.stringify({ type: 'S', l: [msg.location.latitude, msg.location.longitude] }) }],
                 [{ text: '😇 Register an 🏧 📍', callback_data: JSON.stringify({ type: 'A', l: [msg.location.latitude, msg.location.longitude] }) }],
-                [{ text: 'Just say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
+                [{ text: 'Say NOOICE!', callback_data: JSON.stringify({ type: 'N' }) }],
               ],
             }),
           });
