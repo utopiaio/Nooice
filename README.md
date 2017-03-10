@@ -7,7 +7,7 @@
 ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝ ╚═════╝╚══════╝
 ```
 
-Telegram Bot [@noiceBot](https://telegram.me/nooiceBot) that speaks [NOOICE](https://youtu.be/rQnYi3z56RE), also does some other less important stuff too 😒
+Telegram Bot [@NooiceBot](https://telegram.me/NooiceBot) that speaks [NOOICE](https://youtu.be/rQnYi3z56RE), also does some other less important stuff too 😒
 
 - Nearest 🏧 (with moderation handled inside Telegram)
 - Today's Date in Ethiopic
