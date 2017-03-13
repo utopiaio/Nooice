@@ -31,7 +31,7 @@ module.exports = (config, bot, callbackQuery, moedoo) => {
 
         if (atmsInRange.length === 1) {
           bot
-          .sendMessage(callbackQuery.message.chat.id, `NOOICE!\n\n🏦 ${atmsInRange[0].atm_bank_name} 🏧 is within ${atmsInRange[0].atm_distance} meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} from your 📍`, { disable_notification: true })
+          .sendMessage(callbackQuery.message.chat.id, `NOOICE!\n\n${config.NOOICE.includes(callbackQuery.from.id) ? `[${atmsInRange[0].atm_id}]` : '🏦'} ${atmsInRange[0].atm_bank_name} 🏧 is within ${atmsInRange[0].atm_distance} meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} from your 📍`, { disable_notification: true })
           .then(() => {
             // eslint-disable-next-line
             bot.sendLocation(callbackQuery.message.chat.id, JSON.parse(atmsInRange[0].atm_location).coordinates[0], JSON.parse(atmsInRange[0].atm_location).coordinates[1]);
@@ -41,7 +41,7 @@ module.exports = (config, bot, callbackQuery, moedoo) => {
         }
 
         bot
-          .sendMessage(callbackQuery.message.chat.id, `NOOICE!\n\n🏦 ${atmsInRange[0].atm_bank_name} 🏧 is within ${atmsInRange[0].atm_distance} meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} from your 📍\n\nJust in case, I'll send you extra ${atmsInRange.length - 1} 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that is'} within ${config.THRESHOLD} meters`, { disable_notification: true })
+          .sendMessage(callbackQuery.message.chat.id, `NOOICE!\n\n${config.NOOICE.includes(callbackQuery.from.id) ? `[${atmsInRange[0].atm_id}]` : '🏦'} ${atmsInRange[0].atm_bank_name} 🏧 is within ${atmsInRange[0].atm_distance} meter${Number.parseInt(atmsInRange[0].atm_distance, 10) > 1 ? 's' : ''} from your 📍\n\nJust in case, I'll send you extra ${atmsInRange.length - 1} 🏧${atmsInRange.length - 1 > 1 ? 's that are' : ' that\'s'} within ${config.THRESHOLD} meters`, { disable_notification: true })
           .then(() => {
             const inlineKeyboard = atmsInRange.slice(1).map(atm => [{ text: `${atm.atm_distance} meter${Number.parseInt(atm.atm_distance, 10) > 1 ? 's' : ''}`, callback_data: JSON.stringify({ type: 'P', id: atm.atm_id }) }]);
 

@@ -66,7 +66,6 @@ module.exports = (bot, config, moedoo) => (msg) => {
   // message contains NOOICE (but no location) --- sending a NOOICE back!
   if (msg.text.search(/nooice/i) > -1) {
     bot.sendChatAction(msg.chat.id, 'typing');
-
     bot.sendMessage(msg.chat.id, 'NOOICE!');
     return;
   }
