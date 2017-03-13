@@ -12,8 +12,9 @@ const APP_PORT = '8000';
 // 👑 users that have administrator privileges
 const NOOICE = [
   266005847, // @moe
-  166753293, // @meli
-  144735169, // @natan
+  196657624, // @jupi
+  // 166753293, // @meli
+  // 144735169, // @natan
 ];
 
 // Nooice

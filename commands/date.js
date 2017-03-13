@@ -39,6 +39,5 @@ module.exports = (bot, msg) => {
   const gCMoment = moment(msg.date, 'X');
   const ec = ge(gCMoment.year(), gCMoment.month() + 1, gCMoment.date());
 
-  bot.sendMessage(msg.chat.id, `${ec.year}-${ec.month}-${ec.day}
-${gregorianWeekdayToEthiopicWeekday(gCMoment.format('dddd'))}, ${ethiopicMonthToFullEthiopicMonth(ec.month)} ${ec.day}, ${ec.year}`);
+  bot.sendMessage(msg.chat.id, `${ec.year}-${ec.month}-${ec.day}\n${gregorianWeekdayToEthiopicWeekday(gCMoment.format('dddd'))}, ${ethiopicMonthToFullEthiopicMonth(ec.month)} ${ec.day}, ${ec.year}`);
 };
