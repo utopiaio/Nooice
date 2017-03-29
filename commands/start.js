@@ -12,7 +12,7 @@ I am the bot that tells you where the nearest 🏧 is; I can also do *date* and 
 
 The initiative of this bot is to map out *every* 🏧 in 🇪🇹 with the help of the community (and make everyone go broke in the process 😁). There are *500+* 🏧s, how many of them can you find on OSM, Google / Apple Maps?
 
-@nooiceBot currently has ${total} 🏧s compared to Google's 34 and OSM's 30 in 🇪🇹
+@nooiceBot currently has ${total} 🏧s compared to Google's 34 in 🇪🇹
 
 The bot is *fully functional* with PostgreSQL + PostGIS and an approval system
 
